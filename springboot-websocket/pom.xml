@@ -6,20 +6,18 @@
     <groupId>com.jf</groupId>
     <artifactId>springboot-websocket</artifactId>
     <version>1.0</version>
-    <name>springboot-websocket</name>
 
     <properties>
         <github.global.server>github</github.global.server>
-        <java.version>1.8</java.version>
     </properties>
 
-    <distributionManagement>
-        <repository>
-            <id>jf-mvn-repo</id>
-            <name>Local Staging Repository</name>
-            <url>file://${project.build.directory}/mvn-repo</url>
-        </repository>
-    </distributionManagement>
+    <!--    <distributionManagement>-->
+    <!--        <repository>-->
+    <!--            <id>jf-mvn-repo</id>-->
+    <!--            <name>Local Staging Repository</name>-->
+    <!--            <url>file://${project.build.directory}/mvn-repo</url>-->
+    <!--        </repository>-->
+    <!--    </distributionManagement>-->
 
     <build>
         <plugins>
@@ -37,6 +35,24 @@
                 <groupId>com.github.github</groupId>
                 <artifactId>site-maven-plugin</artifactId>
                 <version>0.12</version>
+                <configuration>
+                    <!-- Plugin configuration goes here -->
+                    <server>github</server>
+                    <message>init git maven repository</message>  <!-- The commit message -->
+                    <noJekyll>true</noJekyll>  <!-- disable webpage processing -->
+
+                    <!-- The location where the site is uploaded -->
+                    <repositoryName>github-maven-repository</repositoryName> <!-- github repo name -->
+                    <repositoryOwner>jiangfeng</repositoryOwner> <!-- organization or user name  -->
+                    <!-- Use merge or override the content -->
+                    <merge>true</merge>
+                    <includes>
+                        <include>**/*</include>
+                    </includes>
+                    <outputDirectory>${project.build.directory}/mvn-repo</outputDirectory>
+                    <branch>refs/heads/mvn-repo</branch>
+                </configuration>
+
                 <executions>
                     <execution>
                         <goals>
@@ -44,22 +60,6 @@
                         </goals>
                         <!-- select the Maven phase in which the plugin will be executed -->
                         <phase>deploy</phase>
-                        <configuration>
-                            <!-- Plugin configuration goes here -->
-                            <server>github</server>
-                            <!-- The commit message -->
-                            <message>init git maven repository</message>
-                            <!-- The location where the site is uploaded -->
-                            <repositoryName>github-maven-repository</repositoryName> <!-- github repo name -->
-                            <repositoryOwner>jiangfeng</repositoryOwner> <!-- organization or user name  -->
-                            <!-- Use merge or override the content -->
-                            <merge>true</merge>
-                            <outputDirectory>${project.build.directory}/mvn-repo</outputDirectory>
-                            <branch>refs/heads/mvn-repo</branch>
-                            <!--                                                    <includes>-->
-                            <!--                                                        <include>**/*</include>-->
-                            <!--                                                    </includes>-->
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>
