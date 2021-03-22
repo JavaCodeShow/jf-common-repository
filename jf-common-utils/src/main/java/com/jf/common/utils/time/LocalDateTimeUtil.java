@@ -19,9 +19,17 @@ import com.jf.common.common.constant.TimeStyleConstant;
 public final class LocalDateTimeUtil {
 
 	/**
+	 * 获取当前时间的字符串 格式为:yyyy-MM-dd HH:mm:ss
+	 *
+	 * @return
+	 */
+	public static String getLocalDateTimeStr() {
+		return getLocalDateTimeStr(LocalDateTime.now());
+	}
+
+	/**
 	 * 对LocalDateTime 格式化为:yyyy-MM-dd HH:mm:ss
-	 *
-	 *
+	 * 
 	 * @param localDateTime
 	 * @return
 	 */
@@ -35,7 +43,6 @@ public final class LocalDateTimeUtil {
 
 	/**
 	 * 对LocalDateTime 格式化格式化为字符串
-	 *
 	 *
 	 * @param localDateTime
 	 * @param formatStyle
