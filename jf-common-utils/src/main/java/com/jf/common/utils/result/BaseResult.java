@@ -1,7 +1,6 @@
 package com.jf.common.utils.result;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 import com.jf.common.common.meta.ResultCodeEnum;
 import com.jf.common.utils.time.LocalDateTimeUtil;
@@ -26,10 +25,9 @@ public class BaseResult<T> implements Serializable {
 	private boolean success;
 
 	/**
-	 * 服务器当前时间
+	 * 服务器当前时间 格式为:yyyy-MM-dd HH:mm:ss
 	 */
-	private String time = LocalDateTimeUtil
-			.getLocalDateTimeStr(LocalDateTime.now());
+	private String time = LocalDateTimeUtil.getLocalDateTimeStr();
 
 	/**
 	 * 成功数据
@@ -77,15 +75,48 @@ public class BaseResult<T> implements Serializable {
 		this.success = success;
 	}
 
+	/**
+	 * 返回成功，无数据
+	 * 
+	 * @param <T>
+	 * @return
+	 */
+	public static <T> BaseResult<T> success() {
+		return new BaseResult<T>(null);
+	}
+
+	/**
+	 * 返回成功，有数据
+	 * 
+	 * @param data
+	 * @param <T>
+	 * @return
+	 */
 	public static <T> BaseResult<T> success(T data) {
 		return new BaseResult<T>(data);
 	}
 
+	/**
+	 * 返回成功，有数据，自定义返回code
+	 * 
+	 * @param data
+	 * @param code
+	 * @param <T>
+	 * @return
+	 */
 	public static <T> BaseResult<T> success(T data, String code) {
 		return new BaseResult<T>(data, code,
 				ResultCodeEnum.SUCCESS.getMessage(), Boolean.TRUE);
 	}
 
+	/**
+	 * 返回成功，有数据，自定义返回的code和返回的msg
+	 * 
+	 * @param data
+	 * @param code
+	 * @param <T>
+	 * @return
+	 */
 	public static <T> BaseResult<T> success(T data, String code, String msg) {
 		return new BaseResult<T>(data, code, msg, Boolean.TRUE);
 	}
@@ -96,7 +127,7 @@ public class BaseResult<T> implements Serializable {
 	}
 
 	/**
-	 * 失败返回,自定义 code
+	 * 失败返回,自定义 msg
 	 *
 	 * @param msg
 	 * @return
@@ -130,6 +161,11 @@ public class BaseResult<T> implements Serializable {
 		return fail(resultCodeEnum.getCode(), resultCodeEnum.getMessage());
 	}
 
+	/**
+	 * 获取结果（成功还是失败）
+	 * 
+	 * @return
+	 */
 	public boolean getSuccess() {
 		return this.success;
 	}
