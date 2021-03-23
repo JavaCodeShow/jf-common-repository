@@ -43,6 +43,11 @@ public class PageQueryRequest<T> implements Serializable {
 	 */
 	private Integer startRow;
 
+	/**
+	 * 获取每页查询的个数 默认10个
+	 * 
+	 * @return
+	 */
 	public Integer getPageSize() {
 		if (Objects.isNull(this.pageSize)) {
 			this.pageSize = DEFAULT_SIZE;
@@ -50,14 +55,30 @@ public class PageQueryRequest<T> implements Serializable {
 		return this.pageSize >= 1000 ? 1000 : this.pageSize;
 	}
 
+	/**
+	 * 获取查询的页码 默认是第一页1
+	 * 
+	 * @return
+	 */
 	public Integer getCurrPage() {
-		return this.currPage;
+
+		return Objects.isNull(this.currPage) ? 1 : currPage;
 	}
 
+	/**
+	 * 获取查询参数
+	 * 
+	 * @return
+	 */
 	public T getData() {
 		return this.data;
 	}
 
+	/**
+	 * 查询开始行数
+	 * 
+	 * @return
+	 */
 	public Integer getStartRow() {
 		return this.getPageSize() * (this.currPage - 1);
 	}
