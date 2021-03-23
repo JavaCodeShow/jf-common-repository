@@ -22,7 +22,8 @@ public enum ResultCodeEnum implements BaseResponseInfoInterface {
     NOT_FOUND("404", "未找到该资源!"),
     INTERNAL_SERVER_ERROR("500", "服务器内部错误!"),
     SERVER_BUSY("503", "系统繁忙，请稍后再试!"),
-	RESUBMIT("600", "该方法短时间内重复请求!");
+	RESUBMIT("600", "该方法短时间内重复请求!"),
+	NOT_GET_LOCK("601", "没有获取到锁!");
 
     // @formatter:on
 
