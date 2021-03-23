@@ -77,8 +77,10 @@ public class GlobalExceptionHander {
 				FieldError fieldError = (FieldError) allErrors.get(0);
 				log.error("参数校验不通过，请检查请求参数! 原因是: field = [{}], message = [{}]",
 						fieldError.getField(), fieldError.getDefaultMessage());
-				return BaseResult.fail(fieldError.getField(),
-						fieldError.getDefaultMessage());
+				return BaseResult.fail(
+						ResultCodeEnum.PARAMS_NOT_MATCH.getCode(),
+						"字段：" + fieldError.getField() + "; 原因："
+								+ fieldError.getDefaultMessage());
 			}
 		}
 		log.error("参数校验不通过，请检查请求参数!");
