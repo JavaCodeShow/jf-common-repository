@@ -37,7 +37,48 @@
 @GetMapping("/{id}")
 @MethodLogger
 public BaseResult<OrderDTO> getOrderById(@PathVariable Integer id) {
-	return BaseResult.success(order);
+	return BaseResult.success(new OrderDTO());
+}
+```
+
+### 返回值
+
+> 成功返回：BaseResult.success(xxx)
+>
+> 失败返回：BaseResult.fail(xxx)
+
+### 分页请求(返回)参数
+
+> 请求参数：PageQueryRequest<T>
+>
+> 返回参数：PageQueryResponse.success(list, total)
+
+示例代码：
+
+```
+@ApiOperation(value = "分页查询订单")
+@PostMapping("/list")
+@MethodLogger
+public PageQueryResponse<List<OrderDTO>> orderList(
+@RequestBody @Validated PageQueryRequest<OrderDTO> request) {
+
+	OrderDTO orderDTO = request.getData();
+	List<OrderDTO> orderList = orderService.findxxx();
+  
+	return PageQueryResponse.success(orderList, 1);
+}
+
+```
+
+请求参数：
+
+```
+{
+    "currPage": 1,
+    "pageSize": 10,
+    "data": {
+        "id": 1
+    }
 }
 ```
 
