@@ -48,13 +48,18 @@ public class LockMethodInterceptor {
 		MethodSignature signature = (MethodSignature) pjp.getSignature();
 		Method method = signature.getMethod();
 
-		ReSubmitLock lock = method.getAnnotation(ReSubmitLock.class);
+		ReSubmitLock lockAnnotaion = method.getAnnotation(ReSubmitLock.class);
 
 		final String lockKey = cacheKeyGenerator.getLockKey(pjp);
 		log.info("redis lock key is [{}]", lockKey);
 
-		final boolean success = redissonLockService.tryLock(lockKey, 0L,
-				lock.leaseTime(), TimeUnit.SECONDS);
+		log.info("线程 = [{}], lockKey = [{}], waitTime = [{}], leaseTime = [{}]",
+				Thread.currentThread().getName(), lockKey,
+				lockAnnotaion.waitTime(), lockAnnotaion.leaseTime());
+
+		final boolean success = redissonLockService.tryLock(lockKey,
+				lockAnnotaion.waitTime(), lockAnnotaion.leaseTime(),
+				TimeUnit.SECONDS);
 
 		if (!success) {
 			// 重复提交异常不删除key
@@ -84,10 +89,10 @@ public class LockMethodInterceptor {
 		log.info("线程 = [{}]------进入分布式锁aop------", threadName);
 
 		// 获取该注解的实例对象
-		DistributeLock annotation = ((MethodSignature) pjp.getSignature())
+		DistributeLock lockAnnotaion = ((MethodSignature) pjp.getSignature())
 				.getMethod().getAnnotation(DistributeLock.class);
 
-		String lockKey = annotation.lockKey();
+		String lockKey = lockAnnotaion.lockKey();
 
 		if (StringUtils.isEmpty(lockKey)) {
 			throw new ServiceException("分布式锁必须指定key的值");
@@ -96,8 +101,13 @@ public class LockMethodInterceptor {
 		// 生成分布式锁key
 		log.info("线程[{}]尝试获取锁，锁的key=[{}]", threadName, lockKey);
 
-		if (redissonLockService.tryLock(lockKey, annotation.waitTime(),
-				annotation.leaseTime(), TimeUnit.SECONDS)) {
+		log.info("线程 = [{}], lockKey = [{}], waitTime = [{}], leaseTime = [{}]",
+				threadName, lockKey, lockAnnotaion.waitTime(),
+				lockAnnotaion.leaseTime());
+
+		if (redissonLockService.tryLock(lockKey, lockAnnotaion.waitTime(),
+				lockAnnotaion.leaseTime(), TimeUnit.SECONDS)) {
+
 			try {
 				log.info("线程 = [{}] 获取锁成功", threadName);
 

@@ -15,10 +15,16 @@ import java.lang.annotation.*;
 public @interface ReSubmitLock {
 
 	/**
+	 * 等待获取锁的时间 <br>
+	 * 默认2秒钟没有获取到锁，则放弃获取锁
+	 */
+	long waitTime() default 0;
+
+	/**
 	 * 持有该锁的时间 <br>
 	 * 默认10秒钟客户端没有主动解锁，则主动释放锁
 	 */
-	int leaseTime() default 10;
+	long leaseTime() default 10;
 
 	/**
 	 * <p>
