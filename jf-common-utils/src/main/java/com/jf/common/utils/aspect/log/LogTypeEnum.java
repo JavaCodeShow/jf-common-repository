@@ -1,4 +1,4 @@
-package com.jf.common.aspect.log;
+package com.jf.common.utils.aspect.log;
 
 /**
  * 请求日志打印参数类型枚举

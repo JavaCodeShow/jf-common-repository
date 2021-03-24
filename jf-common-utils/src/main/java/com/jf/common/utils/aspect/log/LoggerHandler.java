@@ -1,4 +1,4 @@
-package com.jf.common.aspect.log;
+package com.jf.common.utils.aspect.log;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -34,7 +34,7 @@ public class LoggerHandler {
 	/**
 	 * 切点 --- 包含HttpLogger注解
 	 */
-	@Pointcut("@annotation(com.jf.common.aspect.log.MethodLogger)")
+	@Pointcut("@annotation(com.jf.common.utils.aspect.log.MethodLogger)")
 	protected void methodLogger() {
 	}
 

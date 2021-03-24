@@ -1,4 +1,4 @@
-package com.jf.common.exception;
+package com.jf.common.utils.common.meta;
 
 /**
  * @author 江峰

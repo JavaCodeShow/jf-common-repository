@@ -1,4 +1,4 @@
-package com.jf.common.utils.time;
+package com.jf.common.utils.utils.time;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -6,7 +6,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
-import com.jf.common.common.constant.TimeStyleConstant;
+import com.jf.common.utils.common.constant.TimeStyleConstant;
 
 /**
  * 描述: 时间操作相关工具类

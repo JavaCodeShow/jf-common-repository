@@ -1,4 +1,4 @@
-package com.jf.common.exception;
+package com.jf.common.utils.exception;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.jf.common.common.meta.ResultCodeEnum;
+import com.jf.common.utils.common.meta.ResultCodeEnum;
 import com.jf.common.utils.result.BaseResult;
 
 import lombok.extern.slf4j.Slf4j;

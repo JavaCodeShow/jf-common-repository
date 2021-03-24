@@ -1,4 +1,4 @@
-package com.jf.common.common.constant;
+package com.jf.common.utils.common.constant;
 
 /**
  * 描述: 时间格式相关常量

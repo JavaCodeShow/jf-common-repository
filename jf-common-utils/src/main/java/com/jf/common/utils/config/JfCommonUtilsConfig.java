@@ -1,4 +1,4 @@
-package com.jf.common.config;
+package com.jf.common.utils.config;
 
 import org.springframework.context.annotation.ComponentScan;
 
@@ -8,7 +8,7 @@ import org.springframework.context.annotation.ComponentScan;
  * @create 2021-03-20 21:47:15
  * @since
  */
-@ComponentScan("com.jf.common")
+@ComponentScan("com.jf.common.utils")
 public class JfCommonUtilsConfig {
 
 }

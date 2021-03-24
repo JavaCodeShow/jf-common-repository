@@ -1,6 +1,4 @@
-package com.jf.common.common.meta;
-
-import com.jf.common.exception.BaseResponseInfoInterface;
+package com.jf.common.utils.common.meta;
 
 import lombok.Getter;
 

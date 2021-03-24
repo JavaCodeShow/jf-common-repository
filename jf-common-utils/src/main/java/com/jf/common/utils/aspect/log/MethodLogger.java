@@ -1,4 +1,4 @@
-package com.jf.common.aspect.log;
+package com.jf.common.utils.aspect.log;
 
 import java.lang.annotation.*;
 
