@@ -121,17 +121,12 @@ public class BaseResult<T> implements Serializable {
 		return new BaseResult<T>(data, code, msg, Boolean.TRUE);
 	}
 
-	protected void setResultCode(ResultCodeEnum code) {
-		this.code = code.getCode();
-		this.msg = code.getMessage();
-	}
-
 	/**
 	 * 失败返回,默认 code 和 msg
 	 *
 	 * @return
 	 */
-	public BaseResult fail() {
+	public static BaseResult fail() {
 		return fail(ResultCodeEnum.ERROR.getCode(),
 				ResultCodeEnum.ERROR.getMessage());
 	}
@@ -142,7 +137,7 @@ public class BaseResult<T> implements Serializable {
 	 * @param msg
 	 * @return
 	 */
-	public BaseResult fail(String msg) {
+	public static BaseResult fail(String msg) {
 		return fail(ResultCodeEnum.ERROR.getCode(), msg);
 	}
 
@@ -169,6 +164,11 @@ public class BaseResult<T> implements Serializable {
 	 */
 	public static BaseResult fail(ResultCodeEnum resultCodeEnum) {
 		return fail(resultCodeEnum.getCode(), resultCodeEnum.getMessage());
+	}
+
+	protected void setResultCode(ResultCodeEnum code) {
+		this.code = code.getCode();
+		this.msg = code.getMessage();
 	}
 
 	/**
