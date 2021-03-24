@@ -60,15 +60,26 @@
    
    ```
 
-
 2. 分布式锁相关：将我们工具类里面定义的RedissonLockService注入，调用相应的方法操作即可。
 
-```
-@Autowired
-private RedissonLockService redissonLockService;
-```
+   ```
+   @Autowired
+   private RedissonLockService redissonLockService;
+   ```
 
-​
+
+3. 表单防重复提交注解：@ReSubmitLock
+
+   > 默认10秒钟内重复的提交拒绝执行。可自定义设置时间
+
+
+4. 分布式锁注解：@DistributeLock(lockKey = "key的值")
+
+> 必须要指定key的值，key值建议：系统code：类的名称：方法名称
+>
+> 锁等待时间：默认2s
+>
+> 锁自动释放时间：默认60s
 
 ## 结束
 
