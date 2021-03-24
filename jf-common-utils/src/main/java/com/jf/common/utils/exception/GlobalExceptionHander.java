@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.jf.common.utils.common.meta.ResultCodeEnum;
+import com.jf.common.utils.common.enums.ResultCodeEnum;
 import com.jf.common.utils.result.BaseResult;
 
 import lombok.extern.slf4j.Slf4j;

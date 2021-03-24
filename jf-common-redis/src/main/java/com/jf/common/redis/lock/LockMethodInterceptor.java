@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import com.jf.common.redis.service.RedissonLockService;
-import com.jf.common.utils.common.meta.ResultCodeEnum;
+import com.jf.common.utils.common.enums.ResultCodeEnum;
 import com.jf.common.utils.exception.ServiceException;
 import com.jf.common.utils.result.BaseResult;
 import com.jf.common.utils.utils.time.LocalDateTimeUtil;

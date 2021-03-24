@@ -1,6 +1,6 @@
 package com.jf.common.utils.exception;
 
-import com.jf.common.utils.common.meta.BaseResponseInfoInterface;
+import com.jf.common.utils.common.enums.BaseResponseInfoInterface;
 
 import lombok.Getter;
 import lombok.Setter;

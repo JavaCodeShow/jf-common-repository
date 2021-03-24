@@ -1,6 +1,6 @@
 package com.jf.common.utils.result;
 
-import com.jf.common.utils.common.meta.ResultCodeEnum;
+import com.jf.common.utils.common.enums.ResultCodeEnum;
 
 import lombok.Data;
 
