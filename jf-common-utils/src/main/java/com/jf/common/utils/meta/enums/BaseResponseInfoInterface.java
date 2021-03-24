@@ -1,4 +1,4 @@
-package com.jf.common.utils.common.enums;
+package com.jf.common.utils.meta.enums;
 
 /**
  * @author 江峰

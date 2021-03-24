@@ -2,7 +2,7 @@ package com.jf.common.utils.result;
 
 import java.io.Serializable;
 
-import com.jf.common.utils.common.enums.ResultCodeEnum;
+import com.jf.common.utils.meta.enums.ResultCodeEnum;
 import com.jf.common.utils.utils.time.LocalDateTimeUtil;
 
 import lombok.Data;
