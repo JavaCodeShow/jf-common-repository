@@ -127,6 +127,16 @@ public class BaseResult<T> implements Serializable {
 	}
 
 	/**
+	 * 失败返回,默认 code 和 msg
+	 *
+	 * @return
+	 */
+	public BaseResult fail() {
+		return fail(ResultCodeEnum.ERROR.getCode(),
+				ResultCodeEnum.ERROR.getMessage());
+	}
+
+	/**
 	 * 失败返回,自定义 msg
 	 *
 	 * @param msg
