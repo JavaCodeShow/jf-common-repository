@@ -1,30 +1,12 @@
-# mvn-repo
+# 微服务常用工具统一
 
-## 一、微服务常用统一工具类
+> 微服务统一工具整理，各个服务可直接接入这些工具进行使用
 
-- 请求（返回）参数打印日志处理
-- 全局异常处理
-- 返回值（BaseResult）,含分页查询请求参数、分页查询返回结果
-- 常用工具类（日期等）
+## 参数打印日志,全局异常，返回值，常用工具类
 
-## 二、使用方式
+- [jf-common-utils](https://github.com/1546844168/github-maven-repository/tree/master/jf-common-utils)
 
-1. 引入依赖
+## Redis,Redisson常用操作封装
 
-```
-<dependency>
-    <groupId>com.jf</groupId>
-    <artifactId>jf-common-utils</artifactId>
-    <version>1.0</version>
-</dependency>
-```
+- [jf-common-redis](https://github.com/1546844168/github-maven-repository/tree/master/jf-common-redis)
 
-2. 导入该模块的配置类，在系统的启动类上面添加这一行代码即可。
-
-   ```
-   @Import({ JfCommonUtilsConfig.class })
-   ```
-
-## 三、结束
-
-每个服务通过引入该工具类，实现了对入参日志，出参日志，全局异常，接口返回值等的统一处理。
