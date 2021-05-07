@@ -1,7 +1,6 @@
 package com.jf.common.redis.service.impl;
 
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -124,66 +123,5 @@ public class RedisServiceImpl implements RedisService {
 		return stringRedisTemplate.getExpire(key);
 	}
 
-	/**
-	 * 
-	 * @param expire
-	 *            过期时间 单位秒
-	 * @param lockKey
-	 *            key
-	 * @param lockValue
-	 *            : 一般是UUID.randomUUID().toString()
-	 *
-	 * @return lockValue ==> 值不为空, 获取到锁，lockValue为空,没有获取到锁)
-	 */
-	@Override
-	public boolean tryLock(String lockKey, String lockValue, int expire) {
-
-		Boolean result = redisTemplate.opsForValue().setIfAbsent(lockKey,
-				lockValue, expire, TimeUnit.SECONDS);
-
-		log.info("get lock = [{}]", result);
-
-		// 获取到锁，立即返回
-		if (Objects.nonNull(result) && result) {
-			return true;
-		}
-
-		// // 获取锁的超时时间，超过这个时间则放弃获取锁
-		// long end = System.currentTimeMillis() + (expire * 1000L);
-		//
-		// while (System.currentTimeMillis() < end) {
-		// // 如果锁超时 ***
-		// String currentValue = stringRedisTemplate.opsForValue()
-		// .get(lockKey);
-		// if (lockValue.equals(currentValue)) {
-		// // 当redis里面存储的值相等时，才会进行删除
-		// stringRedisTemplate.delete(lockKey);
-		// // 再次获取
-		// Boolean res = stringRedisTemplate.opsForValue().setIfAbsent(
-		// lockKey, lockValue, expire, TimeUnit.SECONDS);
-		// if (Objects.nonNull(res) && res) {
-		// return true;
-		// }
-		// }
-		// }
-		return false;
-	}
-
-	@Override
-	public void unLock(String lockKey, String lockValue) {
-
-		String currentValue = stringRedisTemplate.opsForValue().get(lockKey);
-		if (lockValue.equals(currentValue)) {
-			// 当redis里面存储的值相等时，才会进行删除
-			stringRedisTemplate.delete(lockKey);
-		}
-	}
-
-	@Override
-	public void setIfAbsent(String lockKey, String lockValue, long expire) {
-
-		stringRedisTemplate.opsForValue().setIfAbsent(lockKey, lockValue,
-				expire, TimeUnit.SECONDS);
-	}
 
 }
