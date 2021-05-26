@@ -127,8 +127,8 @@ public class BaseResult<T> implements Serializable {
 	 * @return
 	 */
 	public static BaseResult fail() {
-		return fail(ResultCodeEnum.ERROR.getCode(),
-				ResultCodeEnum.ERROR.getMessage());
+		return fail(ResultCodeEnum.SERVER_BUSY.getCode(),
+				ResultCodeEnum.SERVER_BUSY.getMessage());
 	}
 
 	/**
@@ -138,7 +138,7 @@ public class BaseResult<T> implements Serializable {
 	 * @return
 	 */
 	public static BaseResult fail(String msg) {
-		return fail(ResultCodeEnum.ERROR.getCode(), msg);
+		return fail(ResultCodeEnum.SERVER_BUSY.getCode(), msg);
 	}
 
 	/**
