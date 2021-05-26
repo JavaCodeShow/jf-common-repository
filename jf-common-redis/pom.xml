@@ -61,6 +61,8 @@
             <version>1.18.10</version>
             <scope>provided</scope>
         </dependency>
+
+        <!-- 自定义工具类 -->
         <dependency>
             <groupId>com.jf</groupId>
             <artifactId>jf-common-utils</artifactId>
