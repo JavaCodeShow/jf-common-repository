@@ -24,9 +24,10 @@ public class CertainNumListUtils<T> {
 
         Map<Integer, List<T>> map = new HashMap();
 
+        int index = 0;
         for (int i = 0; i < list.size(); i = i + limit) {
             List<T> tempList = getCertainNumDataFromList(list, i, limit);
-            map.put(i++, tempList);
+            map.put(index++, tempList);
         }
 
         return map;
@@ -54,6 +55,19 @@ public class CertainNumListUtils<T> {
         }
 
         return list.subList(fromIndex, toIndex);
+
+    }
+
+    public static void main(String[] args) {
+        List<Integer> list = new ArrayList<>();
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.add(4);
+
+        int limit = 2;
+        Map<Integer, List<Integer>> certainNumMap = getCertainNumMap(list, limit);
+        System.out.println(certainNumMap);
 
     }
 }
