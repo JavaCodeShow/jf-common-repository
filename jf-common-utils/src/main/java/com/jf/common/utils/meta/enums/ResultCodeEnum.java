@@ -12,7 +12,7 @@ import lombok.Getter;
 @Getter
 public enum ResultCodeEnum implements BaseResponseInfoInterface {
 
-	// @formatter:off
+    // @formatter:off
 
     SUCCESS("200", "成功"),
     ERROR("201", "失败"),
@@ -20,62 +20,62 @@ public enum ResultCodeEnum implements BaseResponseInfoInterface {
     NOT_FOUND("404", "未找到该资源!"),
     INTERNAL_SERVER_ERROR("500", "服务器内部错误!"),
     SERVER_BUSY("503", "系统繁忙，请稍后重试!"),
-	RESUBMIT("600", "操作频繁，请稍后重试!"),
-	NOT_GET_LOCK("601", "没有获取到锁!");
+    RESUBMIT("600", "操作频繁，请稍后重试!"),
+    NOT_GET_LOCK("601", "没有获取到锁!");
 
     // @formatter:on
 
-	private String code;
+    private String code;
 
-	private String message;
+    private String message;
 
-	ResultCodeEnum(String code, String message) {
-		this.code = code;
-		this.message = message;
-	}
+    ResultCodeEnum(String code, String message) {
+        this.code = code;
+        this.message = message;
+    }
 
-	/**
-	 * 根据code获取该code对应的枚举
-	 *
-	 * @param code
-	 * @return
-	 */
-	public static ResultCodeEnum getEnumByCode(String code) {
-		for (ResultCodeEnum item : ResultCodeEnum.values()) {
-			if (item.getCode().equals(code)) {
-				return item;
-			}
-		}
-		return null;
-	}
+    /**
+     * 根据code获取该code对应的枚举
+     *
+     * @param code
+     * @return
+     */
+    public static ResultCodeEnum getEnumByCode(String code) {
+        for (ResultCodeEnum item : ResultCodeEnum.values()) {
+            if (item.getCode().equals(code)) {
+                return item;
+            }
+        }
+        return null;
+    }
 
-	/**
-	 * 根据code获取该code对应的枚举的描述
-	 *
-	 * @param code
-	 * @return
-	 */
-	public static String getMessageByCode(String code) {
-		for (ResultCodeEnum item : ResultCodeEnum.values()) {
-			if (item.getCode().equals(code)) {
-				return item.message;
-			}
-		}
-		return null;
-	}
+    /**
+     * 根据code获取该code对应的枚举的描述
+     *
+     * @param code
+     * @return
+     */
+    public static String getMessageByCode(String code) {
+        for (ResultCodeEnum item : ResultCodeEnum.values()) {
+            if (item.getCode().equals(code)) {
+                return item.message;
+            }
+        }
+        return null;
+    }
 
-	/**
-	 * 根据描述获取对应的枚举
-	 *
-	 * @param msg
-	 * @return
-	 */
-	public static ResultCodeEnum getEnumByMessage(String msg) {
-		for (ResultCodeEnum item : ResultCodeEnum.values()) {
-			if (item.getMessage().equals(msg)) {
-				return item;
-			}
-		}
-		return null;
-	}
+    /**
+     * 根据描述获取对应的枚举
+     *
+     * @param msg
+     * @return
+     */
+    public static ResultCodeEnum getEnumByMessage(String msg) {
+        for (ResultCodeEnum item : ResultCodeEnum.values()) {
+            if (item.getMessage().equals(msg)) {
+                return item;
+            }
+        }
+        return null;
+    }
 }

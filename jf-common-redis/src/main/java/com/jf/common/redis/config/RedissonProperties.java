@@ -1,9 +1,8 @@
 package com.jf.common.redis.config;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
-
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * 描述:
@@ -17,10 +16,10 @@ import lombok.Setter;
 @ConfigurationProperties(prefix = "spring.redisson")
 public class RedissonProperties {
 
-	/**
-	 * redis连接地址 <br>
-	 * String address = "redis://127.0.0.1:6379"
-	 */
-	private String address;
+    /**
+     * redis连接地址 <br>
+     * String address = "redis://127.0.0.1:6379"
+     */
+    private String address;
 
 }
