@@ -5,7 +5,9 @@ import com.jf.common.utils.meta.constant.TimeStyleConstant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -114,5 +116,38 @@ public final class LocalDateTimeUtil {
     public static LocalTime toLocalTime(LocalDateTime localDateTime) {
         return localDateTime.toLocalTime();
     }
+
+    /**
+     * 获取秒数
+     * localDateTime转换为秒数
+     *
+     * @param localDateTime
+     * @return
+     */
+    public Long getSecond(LocalDateTime localDateTime) {
+        return localDateTime.toEpochSecond(ZoneOffset.of("+8"));
+    }
+
+    /**
+     * 获取毫秒数
+     * localDateTime转换为毫秒数
+     *
+     * @param localDateTime
+     * @return
+     */
+    public Long getMilliSecond(LocalDateTime localDateTime) {
+        return localDateTime.toInstant(ZoneOffset.of("+8")).toEpochMilli();
+    }
+
+    /**
+     * java.util.date转换为LocalDateTime
+     *
+     * @param date
+     * @return
+     */
+    public LocalDateTime transDateToLocalDateTime(Date date) {
+        return date.toInstant().atOffset(ZoneOffset.of("+8")).toLocalDateTime();
+    }
+
 
 }
