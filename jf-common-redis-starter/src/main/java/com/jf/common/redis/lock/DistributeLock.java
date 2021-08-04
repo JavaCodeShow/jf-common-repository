@@ -29,7 +29,7 @@ public @interface DistributeLock {
 
     /**
      * 持有该锁的时间 <br>
-     * 默认10秒钟客户端没有主动解锁，则主动释放锁
+     * 默认60秒钟客户端没有主动解锁，则主动释放锁
      */
     long leaseTime() default 60;
 
