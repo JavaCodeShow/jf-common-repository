@@ -1,4 +1,4 @@
-# jf-common-utils
+# jf-common-utils-starter
 
 ## 微服务常用统一工具类
 
@@ -14,12 +14,12 @@
 ```
 <dependency>
     <groupId>com.jf</groupId>
-    <artifactId>jf-common-utils</artifactId>
+    <artifactId>jf-common-utils-starter</artifactId>
     <version>1.0</version>
 </dependency>
 ```
 
-2. 导入该模块的配置类，在系统的启动类上面添加这一行代码即可。
+2. 导入该模块的配置类，在系统的启动类上面添加这一行代码即可。(已改为SpringBoot的自动装配，无需引入此配置类了)
 
    ```
    @Import({ JfCommonUtilsConfig.class })

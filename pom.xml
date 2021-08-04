@@ -17,8 +17,8 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>jf-common-utils</module>
-        <module>jf-common-redis</module>
+        <module>jf-common-utils-starter</module>
+        <module>jf-common-redis-starter</module>
     </modules>
 
 </project>
