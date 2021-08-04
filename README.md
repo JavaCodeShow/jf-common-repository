@@ -4,9 +4,9 @@
 
 ## 参数打印日志,全局异常，返回值，常用工具类
 
-- [jf-common-utils-starter](https://github.com/1546844168/github-maven-repository/tree/master/jf-common-utils)
+- [jf-common-utils-starter](https://github.com/1546844168/github-maven-repository/tree/master/jf-common-utils-starter)
 
 ## Redis,Redisson常用操作封装
 
-- [jf-common-redis-starter](https://github.com/1546844168/github-maven-repository/tree/master/jf-common-redis)
+- [jf-common-redis-starter](https://github.com/1546844168/github-maven-repository/tree/master/jf-common-redis-starter)
 
