@@ -5,9 +5,6 @@ import lombok.Data;
 
 /**
  * @author 江峰
- * @email feng.jiang@marketin.cn
- * @create 2021-03-19 23:47:38
- * @since
  */
 @Data
 public class PageQueryResponse<T> extends BaseResult<T> {
@@ -41,7 +38,7 @@ public class PageQueryResponse<T> extends BaseResult<T> {
 
     public static <T> PageQueryResponse<T> failure() {
         PageQueryResponse<T> result = new PageQueryResponse<>();
-        result.setResultCode(GlobalErrorCodeEnum.ERROR);
+        result.setResultCode(GlobalErrorCodeEnum.SERVER_BUSY);
         result.setSuccess(Boolean.FALSE);
         return result;
     }
