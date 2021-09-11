@@ -1,6 +1,6 @@
 package com.jf.common.utils.result;
 
-import com.jf.common.utils.meta.enums.ResultCodeEnum;
+import com.jf.common.utils.meta.enums.GlobalErrorCodeEnum;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -50,7 +50,7 @@ public class BaseResult<T> implements Serializable {
      */
     private BaseResult(T data) {
         this.data = data;
-        this.setResultCode(ResultCodeEnum.SUCCESS);
+        this.setResultCode(GlobalErrorCodeEnum.SUCCESS);
         this.setSuccess(Boolean.TRUE);
     }
 
@@ -70,9 +70,6 @@ public class BaseResult<T> implements Serializable {
 
     /**
      * 返回成功，无数据
-     *
-     * @param <T>
-     * @return
      */
     public static <T> BaseResult<T> success() {
         return new BaseResult<T>(null);
@@ -80,10 +77,6 @@ public class BaseResult<T> implements Serializable {
 
     /**
      * 返回成功，有数据
-     *
-     * @param data
-     * @param <T>
-     * @return
      */
     public static <T> BaseResult<T> success(T data) {
         return new BaseResult<T>(data);
@@ -91,24 +84,14 @@ public class BaseResult<T> implements Serializable {
 
     /**
      * 返回成功，有数据，自定义返回code
-     *
-     * @param data
-     * @param code
-     * @param <T>
-     * @return
      */
     public static <T> BaseResult<T> success(T data, String code) {
         return new BaseResult<T>(data, code,
-                ResultCodeEnum.SUCCESS.getMessage(), Boolean.TRUE);
+                GlobalErrorCodeEnum.SUCCESS.getMessage(), Boolean.TRUE);
     }
 
     /**
      * 返回成功，有数据，自定义返回的code和返回的msg
-     *
-     * @param data
-     * @param code
-     * @param <T>
-     * @return
      */
     public static <T> BaseResult<T> success(T data, String code, String msg) {
         return new BaseResult<T>(data, code, msg, Boolean.TRUE);
@@ -116,30 +99,21 @@ public class BaseResult<T> implements Serializable {
 
     /**
      * 失败返回,默认 code 和 msg
-     *
-     * @return
      */
     public static BaseResult fail() {
-        return fail(ResultCodeEnum.SERVER_BUSY.getCode(),
-                ResultCodeEnum.SERVER_BUSY.getMessage());
+        return fail(GlobalErrorCodeEnum.SERVER_BUSY.getCode(),
+                GlobalErrorCodeEnum.SERVER_BUSY.getMessage());
     }
 
     /**
      * 失败返回,自定义 msg
-     *
-     * @param msg
-     * @return
      */
     public static BaseResult fail(String msg) {
-        return fail(ResultCodeEnum.SERVER_BUSY.getCode(), msg);
+        return fail(GlobalErrorCodeEnum.SERVER_BUSY.getCode(), msg);
     }
 
     /**
      * 失败返回,自定义 code和msg
-     *
-     * @param code
-     * @param msg
-     * @return
      */
     public static BaseResult fail(String code, String msg) {
         BaseResult result = new BaseResult();
@@ -151,23 +125,18 @@ public class BaseResult<T> implements Serializable {
 
     /**
      * 失败返回,自定义选择ResultCodeEnum
-     *
-     * @param resultCodeEnum
-     * @return
      */
-    public static BaseResult fail(ResultCodeEnum resultCodeEnum) {
+    public static BaseResult fail(GlobalErrorCodeEnum resultCodeEnum) {
         return fail(resultCodeEnum.getCode(), resultCodeEnum.getMessage());
     }
 
-    protected void setResultCode(ResultCodeEnum code) {
+    protected void setResultCode(GlobalErrorCodeEnum code) {
         this.code = code.getCode();
         this.msg = code.getMessage();
     }
 
     /**
      * 获取结果（成功还是失败）
-     *
-     * @return
      */
     public boolean getSuccess() {
         return this.success;

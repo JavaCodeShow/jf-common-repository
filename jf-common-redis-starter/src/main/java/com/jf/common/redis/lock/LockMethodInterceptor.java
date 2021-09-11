@@ -2,7 +2,7 @@ package com.jf.common.redis.lock;
 
 import com.jf.common.redis.service.RedissonLockService;
 import com.jf.common.utils.exception.ServiceException;
-import com.jf.common.utils.meta.enums.ResultCodeEnum;
+import com.jf.common.utils.meta.enums.GlobalErrorCodeEnum;
 import com.jf.common.utils.result.BaseResult;
 import com.jf.common.utils.utils.time.LocalDateTimeUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -34,10 +34,6 @@ public class LockMethodInterceptor {
 
     /**
      * 防止表单重复提交
-     *
-     * @param pjp
-     * @return
-     * @throws Throwable
      */
     @Around("@annotation(com.jf.common.redis.lock.ReSubmitLock)")
     public Object reSubmitLockInterceptor(ProceedingJoinPoint pjp)
@@ -61,7 +57,7 @@ public class LockMethodInterceptor {
 
         if (!success) {
             // 重复提交异常不删除key
-            throw new ServiceException(ResultCodeEnum.RESUBMIT);
+            throw new ServiceException(GlobalErrorCodeEnum.RESUBMIT);
         }
 
         log.info("success = [{}], 时间 = [{}]", true,
@@ -72,10 +68,6 @@ public class LockMethodInterceptor {
 
     /**
      * 防止方法同时被多个线程或者客户端执行
-     *
-     * @param pjp
-     * @return
-     * @throws Throwable
      */
     @Around("@annotation(com.jf.common.redis.lock.DistributeLock)")
     public Object distributeLockInterceptor(ProceedingJoinPoint pjp)
@@ -125,7 +117,7 @@ public class LockMethodInterceptor {
         } else {
             log.info("线程[{}] 获取锁失败", threadName);
         }
-        return BaseResult.fail(ResultCodeEnum.NOT_GET_LOCK);
+        return BaseResult.fail(GlobalErrorCodeEnum.NOT_GET_LOCK);
     }
 
 }

@@ -1,6 +1,7 @@
 package com.jf.common.utils.exception;
 
 import com.jf.common.utils.meta.enums.BaseResponseInfoInterface;
+import com.jf.common.utils.meta.enums.GlobalErrorCodeEnum;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,18 +25,16 @@ public class ServiceException extends RuntimeException {
     protected String errorMsg;
 
     public ServiceException(BaseResponseInfoInterface errorResponseInfo) {
-        // super(errorResponseInfo.getMessage());
         this.errorCode = errorResponseInfo.getCode();
         this.errorMsg = errorResponseInfo.getMessage();
     }
 
     public ServiceException(String errorMsg) {
-        // super(errorMsg);
         this.errorMsg = errorMsg;
+        this.errorCode = GlobalErrorCodeEnum.SERVER_BUSY.getCode();
     }
 
     public ServiceException(String errorCode, String errorMsg) {
-        // super(errorMsg);
         this.errorCode = errorCode;
         this.errorMsg = errorMsg;
     }

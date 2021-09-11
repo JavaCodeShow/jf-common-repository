@@ -10,7 +10,7 @@ import lombok.Getter;
  * @since: 2.20.1.1
  */
 @Getter
-public enum ResultCodeEnum implements BaseResponseInfoInterface {
+public enum GlobalErrorCodeEnum implements BaseResponseInfoInterface {
 
     // @formatter:off
 
@@ -29,7 +29,7 @@ public enum ResultCodeEnum implements BaseResponseInfoInterface {
 
     private String message;
 
-    ResultCodeEnum(String code, String message) {
+    GlobalErrorCodeEnum(String code, String message) {
         this.code = code;
         this.message = message;
     }
@@ -40,8 +40,8 @@ public enum ResultCodeEnum implements BaseResponseInfoInterface {
      * @param code
      * @return
      */
-    public static ResultCodeEnum getEnumByCode(String code) {
-        for (ResultCodeEnum item : ResultCodeEnum.values()) {
+    public static GlobalErrorCodeEnum getEnumByCode(String code) {
+        for (GlobalErrorCodeEnum item : GlobalErrorCodeEnum.values()) {
             if (item.getCode().equals(code)) {
                 return item;
             }
@@ -56,7 +56,7 @@ public enum ResultCodeEnum implements BaseResponseInfoInterface {
      * @return
      */
     public static String getMessageByCode(String code) {
-        for (ResultCodeEnum item : ResultCodeEnum.values()) {
+        for (GlobalErrorCodeEnum item : GlobalErrorCodeEnum.values()) {
             if (item.getCode().equals(code)) {
                 return item.message;
             }
@@ -70,8 +70,8 @@ public enum ResultCodeEnum implements BaseResponseInfoInterface {
      * @param msg
      * @return
      */
-    public static ResultCodeEnum getEnumByMessage(String msg) {
-        for (ResultCodeEnum item : ResultCodeEnum.values()) {
+    public static GlobalErrorCodeEnum getEnumByMessage(String msg) {
+        for (GlobalErrorCodeEnum item : GlobalErrorCodeEnum.values()) {
             if (item.getMessage().equals(msg)) {
                 return item;
             }
