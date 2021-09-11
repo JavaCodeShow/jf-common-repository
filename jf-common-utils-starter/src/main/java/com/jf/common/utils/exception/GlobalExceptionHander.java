@@ -35,7 +35,7 @@ public class GlobalExceptionHander {
     @ResponseBody
     public BaseResult ServiceExceptionHandler(ServiceException e) {
 
-        log.error("发生业务异常！原因是:", e);
+        log.error("发生业务异常！errorCode = [{}], errorMsg = [{}], 原因是:", e.getErrorCode(), e.getErrorMsg(), e);
         return BaseResult.fail(e.getErrorCode(), e.getErrorMsg());
 
     }
