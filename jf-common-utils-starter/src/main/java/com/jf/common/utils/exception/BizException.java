@@ -6,12 +6,14 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
+ * 业务逻辑异常处理类
+ *
  * @author 潇潇暮雨
  * @create 2018-09-30 20:45
  */
 @Getter
 @Setter
-public class ServiceException extends RuntimeException {
+public class BizException extends RuntimeException {
     private static final long serialVersionUID = -4011604611008441850L;
 
     /**
@@ -24,17 +26,17 @@ public class ServiceException extends RuntimeException {
      */
     protected String errorMsg;
 
-    public ServiceException(BaseResponseInfoInterface errorResponseInfo) {
+    public BizException(BaseResponseInfoInterface errorResponseInfo) {
         this.errorCode = errorResponseInfo.getCode();
         this.errorMsg = errorResponseInfo.getMessage();
     }
 
-    public ServiceException(String errorMsg) {
+    public BizException(String errorMsg) {
         this.errorMsg = errorMsg;
         this.errorCode = GlobalErrorCodeEnum.SERVER_BUSY.getCode();
     }
 
-    public ServiceException(String errorCode, String errorMsg) {
+    public BizException(String errorCode, String errorMsg) {
         this.errorCode = errorCode;
         this.errorMsg = errorMsg;
     }

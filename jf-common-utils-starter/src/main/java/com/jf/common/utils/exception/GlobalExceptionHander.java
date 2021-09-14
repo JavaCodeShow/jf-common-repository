@@ -31,9 +31,9 @@ public class GlobalExceptionHander {
      * @param e
      * @return
      */
-    @ExceptionHandler(value = ServiceException.class)
+    @ExceptionHandler(value = BizException.class)
     @ResponseBody
-    public BaseResult ServiceExceptionHandler(ServiceException e) {
+    public BaseResult exceptionHandler(BizException e) {
 
         log.error("发生业务异常！errorCode = [{}], errorMsg = [{}], 原因是:", e.getErrorCode(), e.getErrorMsg(), e);
         return BaseResult.fail(e.getErrorCode(), e.getErrorMsg());

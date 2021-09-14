@@ -1,7 +1,7 @@
 package com.jf.common.redis.lock;
 
 import com.jf.common.redis.service.RedissonLockService;
-import com.jf.common.utils.exception.ServiceException;
+import com.jf.common.utils.exception.BizException;
 import com.jf.common.utils.meta.enums.GlobalErrorCodeEnum;
 import com.jf.common.utils.result.BaseResult;
 import com.jf.common.utils.utils.time.LocalDateTimeUtil;
@@ -57,7 +57,7 @@ public class LockMethodInterceptor {
 
         if (!success) {
             // 重复提交异常不删除key
-            throw new ServiceException(GlobalErrorCodeEnum.RESUBMIT);
+            throw new BizException(GlobalErrorCodeEnum.RESUBMIT);
         }
 
         log.info("success = [{}], 时间 = [{}]", true,
@@ -85,7 +85,7 @@ public class LockMethodInterceptor {
         String lockKey = lockAnnotaion.lockKey();
 
         if (StringUtils.isEmpty(lockKey)) {
-            throw new ServiceException("分布式锁必须指定key的值");
+            throw new BizException("分布式锁必须指定key的值");
         }
 
         // 生成分布式锁key
