@@ -27,16 +27,19 @@ public class BizException extends RuntimeException {
     protected String errorMsg;
 
     public BizException(BaseResponseInfoInterface errorResponseInfo) {
+        super(errorResponseInfo.getMessage());
         this.errorCode = errorResponseInfo.getCode();
         this.errorMsg = errorResponseInfo.getMessage();
     }
 
     public BizException(String errorMsg) {
+        super(errorMsg);
         this.errorMsg = errorMsg;
         this.errorCode = GlobalErrorCodeEnum.SERVER_BUSY.getCode();
     }
 
     public BizException(String errorCode, String errorMsg) {
+        super(errorMsg);
         this.errorCode = errorCode;
         this.errorMsg = errorMsg;
     }
