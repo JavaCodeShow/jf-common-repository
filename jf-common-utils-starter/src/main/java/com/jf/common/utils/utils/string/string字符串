@@ -1,1 +1,1 @@
-(super=BaseEntityInfo(id=null, createTime=null, updateTime=null), discountPrice=0)
+(xxx=[User(id=1, name=张三), User(id=2, name=李四)])
