@@ -1,4 +1,4 @@
-package com.jf.common.redis.service;
+package com.jf.common.redis.service.lock;
 
 import java.util.concurrent.TimeUnit;
 
@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit;
  * @create: 2021-03-23 18:46
  * @since: 2.22.1
  */
-public interface RedissonLockService {
+public interface DistributeLockService {
 
     /**
      * 加锁
@@ -36,11 +36,11 @@ public interface RedissonLockService {
     /**
      * 加锁，设置有效期并指定时间单位
      *
-     * @param lockKey key
-     * @param timeout 有效时间
-     * @param unit    时间单位
+     * @param lockKey   key
+     * @param leaseTime 有效时间
+     * @param unit      时间单位
      */
-    void lock(String lockKey, int timeout, TimeUnit unit);
+    void lock(String lockKey, int leaseTime, TimeUnit unit);
 
     /**
      * 尝试获取锁，获取到则持有该锁返回true,未获取到立即返回false

@@ -1,6 +1,5 @@
-package com.jf.common.redis.service.impl;
+package com.jf.common.redis.service.cache;
 
-import com.jf.common.redis.service.RedisService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;

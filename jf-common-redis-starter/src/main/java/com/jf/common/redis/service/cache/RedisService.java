@@ -1,4 +1,4 @@
-package com.jf.common.redis.service;
+package com.jf.common.redis.service.cache;
 
 import java.util.Map;
 import java.util.Set;

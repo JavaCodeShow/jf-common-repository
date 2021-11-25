@@ -1,4 +1,4 @@
-package com.jf.common.redis.lock;
+package com.jf.common.redis.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

@@ -1,6 +1,6 @@
-package com.jf.common.redis.lock;
+package com.jf.common.redis.annotation;
 
-import com.jf.common.redis.service.RedissonLockService;
+import com.jf.common.redis.service.lock.DistributeLockService;
 import com.jf.common.utils.exception.BizException;
 import com.jf.common.utils.meta.enums.GlobalErrorCodeEnum;
 import com.jf.common.utils.result.BaseResult;
@@ -18,8 +18,7 @@ import java.lang.reflect.Method;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @author luxinghui
- * @date 2019-05-23
+ * @author 江峰
  */
 @Aspect
 @Slf4j
@@ -27,15 +26,12 @@ import java.util.concurrent.TimeUnit;
 public class LockMethodInterceptor {
 
     @Autowired
-    private CacheKeyGenerator cacheKeyGenerator;
-
-    @Autowired
-    private RedissonLockService redissonLockService;
+    private DistributeLockService distributeLockService;
 
     /**
      * 防止表单重复提交
      */
-    @Around("@annotation(com.jf.common.redis.lock.ReSubmitLock)")
+    @Around("@annotation(com.jf.common.redis.annotation.ReSubmitLock)")
     public Object reSubmitLockInterceptor(ProceedingJoinPoint pjp)
             throws Throwable {
 
@@ -44,14 +40,15 @@ public class LockMethodInterceptor {
 
         ReSubmitLock lockAnnotaion = method.getAnnotation(ReSubmitLock.class);
 
-        final String lockKey = cacheKeyGenerator.getLockKey(pjp);
+        String lockKey = generateLockKey(pjp);
+
         log.info("redis lock key is [{}]", lockKey);
 
         log.info("线程 = [{}], lockKey = [{}], waitTime = [{}], leaseTime = [{}]",
                 Thread.currentThread().getName(), lockKey,
                 lockAnnotaion.waitTime(), lockAnnotaion.leaseTime());
 
-        final boolean success = redissonLockService.tryLock(lockKey,
+        final boolean success = distributeLockService.tryLock(lockKey,
                 lockAnnotaion.waitTime(), lockAnnotaion.leaseTime(),
                 TimeUnit.SECONDS);
 
@@ -67,9 +64,23 @@ public class LockMethodInterceptor {
     }
 
     /**
+     * 生成防重复提交锁的key的名字
+     */
+    private String generateLockKey(ProceedingJoinPoint pjp) {
+
+        MethodSignature signature = (MethodSignature) pjp.getSignature();
+        Method method = signature.getMethod();
+        ReSubmitLock lockAnnotation = method.getAnnotation(ReSubmitLock.class);
+
+        // TODO 同一个人同一个方法(userId 和userType需要取系统具体的值)
+        return "userId" + lockAnnotation.delimiter() + "userType"
+                + lockAnnotation.delimiter() + method.getName();
+    }
+
+    /**
      * 防止方法同时被多个线程或者客户端执行
      */
-    @Around("@annotation(com.jf.common.redis.lock.DistributeLock)")
+    @Around("@annotation(com.jf.common.redis.annotation.DistributeLock)")
     public Object distributeLockInterceptor(ProceedingJoinPoint pjp)
             throws Throwable {
 
@@ -95,7 +106,7 @@ public class LockMethodInterceptor {
                 threadName, lockKey, lockAnnotaion.waitTime(),
                 lockAnnotaion.leaseTime());
 
-        if (redissonLockService.tryLock(lockKey, lockAnnotaion.waitTime(),
+        if (distributeLockService.tryLock(lockKey, lockAnnotaion.waitTime(),
                 lockAnnotaion.leaseTime(), TimeUnit.SECONDS)) {
 
             try {
@@ -103,13 +114,13 @@ public class LockMethodInterceptor {
 
                 return pjp.proceed();
             } finally {
-                if (redissonLockService.isLocked(lockKey)) {
+                if (distributeLockService.isLocked(lockKey)) {
                     log.info("锁的key的值 = [{}], 被线程 = [{}]持有", lockKey,
                             threadName);
 
-                    if (redissonLockService.isHeldByCurrentThread(lockKey)) {
+                    if (distributeLockService.isHeldByCurrentThread(lockKey)) {
                         log.info("当前线程 {} 保持锁定", threadName);
-                        redissonLockService.unlock(lockKey);
+                        distributeLockService.unlock(lockKey);
                         log.info("线程{} 释放锁", threadName);
                     }
                 }

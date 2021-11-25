@@ -1,8 +1,8 @@
-package com.jf.common.redis.service.impl;
+package com.jf.common.redis.service.lock;
 
-import com.jf.common.redis.service.RedissonLockService;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.TimeUnit;
@@ -15,13 +15,10 @@ import java.util.concurrent.TimeUnit;
  * @since: 2.22.1
  */
 @Service
-public class RedissonLockServiceImpl implements RedissonLockService {
+public class DistributeLockServiceImpl implements DistributeLockService {
 
+    @Autowired
     private RedissonClient redissonClient;
-
-    public RedissonLockServiceImpl(RedissonClient redissonClient) {
-        this.redissonClient = redissonClient;
-    }
 
     @Override
     public void lock(String lockKey) {
@@ -42,9 +39,9 @@ public class RedissonLockServiceImpl implements RedissonLockService {
     }
 
     @Override
-    public void lock(String lockKey, int timeout, TimeUnit unit) {
+    public void lock(String lockKey, int leaseTime, TimeUnit unit) {
         RLock lock = redissonClient.getLock(lockKey);
-        lock.lock(timeout, unit);
+        lock.lock(leaseTime, unit);
     }
 
     @Override
