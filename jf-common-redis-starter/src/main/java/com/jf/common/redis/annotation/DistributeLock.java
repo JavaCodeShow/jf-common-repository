@@ -16,21 +16,21 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface DistributeLock {
 
-    /**
-     * 指定分布式锁的key
-     */
-    String lockKey();
+	/**
+	 * 指定分布式锁的key
+	 */
+	String lockKey();
 
-    /**
-     * 等待获取锁的时间 <br>
-     * 默认2秒钟没有获取到锁，则放弃获取锁
-     */
-    long waitTime() default 2;
+	/**
+	 * 等待获取锁的时间 <br>
+	 * 默认不等待，如果没有获取到锁，则直接放弃获取锁
+	 */
+	long waitTime() default 0;
 
-    /**
-     * 持有该锁的时间 <br>
-     * 默认60秒钟客户端没有主动解锁，则主动释放锁
-     */
-    long leaseTime() default 60;
+	/**
+	 * 持有该锁的时间 <br>
+	 * 默认60秒钟客户端没有主动解锁，则主动释放锁
+	 */
+	long leaseTime() default 60;
 
 }

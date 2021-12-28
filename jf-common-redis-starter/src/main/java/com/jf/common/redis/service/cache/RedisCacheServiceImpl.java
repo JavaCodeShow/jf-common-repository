@@ -1,14 +1,15 @@
 package com.jf.common.redis.service.cache;
 
-import lombok.extern.slf4j.Slf4j;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author 江峰
@@ -18,7 +19,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Service
 @Slf4j
-public class RedisServiceImpl implements RedisService {
+public class RedisCacheServiceImpl implements RedisCacheService {
 
     @Autowired
     private RedisTemplate<String, String> redisTemplate;

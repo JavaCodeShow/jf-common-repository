@@ -1,17 +1,19 @@
 package com.jf.common.utils.utils.string;
 
-import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.serializer.SerializerFeature;
-import javafx.util.Pair;
-import org.apache.commons.lang3.StringUtils;
+import static com.jf.common.utils.utils.string.StringToJsonUtils.ToStringTokenUtils.parseToken;
+import static com.jf.common.utils.utils.string.StringToJsonUtils.ToStringTokenUtils.splitToken;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.regex.Pattern;
 
-import static com.jf.common.utils.utils.string.StringToJsonUtils.ToStringTokenUtils.parseToken;
-import static com.jf.common.utils.utils.string.StringToJsonUtils.ToStringTokenUtils.splitToken;
+import org.apache.commons.lang3.StringUtils;
+
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.SerializerFeature;
+
+import javafx.util.Pair;
 
 /**
  * string字符串 -> json
@@ -155,8 +157,10 @@ public class StringToJsonUtils {
         /**
          * 获取第一个token，注意: toString不再包括最外层的()
          */
-        private static List<Character> TOKEN_LEFT = Arrays.asList('(', '{', '[');
-        private static List<Character> TOKEN_RIGHT = Arrays.asList(')', '}', ']');
+		private static final List<Character> TOKEN_LEFT = Arrays.asList('(',
+				'{', '[');
+		private static final List<Character> TOKEN_RIGHT = Arrays.asList(')',
+				'}', ']');
 
         static String splitToken(String toString) {
             if (StringUtils.isBlank(toString)) {

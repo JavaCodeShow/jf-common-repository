@@ -9,7 +9,7 @@ import java.util.Set;
  * @create 2021-03-20 23:11:05
  * @since
  */
-public interface RedisService {
+public interface RedisCacheService {
 
     /**
      * string 类型 设置
@@ -98,7 +98,7 @@ public interface RedisService {
      *
      * @param keys
      */
-    public void del(Set<String> keys);
+	void del(Set<String> keys);
 
     /**
      * redis 自增

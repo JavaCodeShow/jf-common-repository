@@ -22,9 +22,9 @@ public enum GlobalErrorCodeEnum implements BaseResponseInfoInterface {
     RPC_TIME_OUT("700", "请求超时");
 
 
-    private String code;
+	private final String code;
 
-    private String message;
+	private final String message;
 
     GlobalErrorCodeEnum(String code, String message) {
         this.code = code;
