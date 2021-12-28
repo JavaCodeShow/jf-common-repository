@@ -4,12 +4,15 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.jf.common.redis.service.lock.DistributeLockType;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * 分布式锁键生成器
  *
  * @author 江峰
  * @date 2020/6/19 11:47 上午
  */
+@Slf4j
 public class LockKeyGenerator {
 
 	/**
@@ -21,9 +24,7 @@ public class LockKeyGenerator {
 		if (StringUtils.isBlank(bizCode)) {
 			return lockType.getPrefix() + ":" + lockType.getBizType();
 		}
-
 		return lockType.getPrefix() + ":" + lockType.getBizType() + ":"
 				+ bizCode;
-
 	}
 }
