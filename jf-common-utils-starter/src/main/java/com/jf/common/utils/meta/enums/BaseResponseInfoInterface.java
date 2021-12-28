@@ -8,14 +8,14 @@ package com.jf.common.utils.meta.enums;
  */
 public interface BaseResponseInfoInterface {
 
-    /**
-     * 状态码
-     */
-    String getCode();
+	/**
+	 * 状态码
+	 */
+	String getCode();
 
-    /**
-     * 描述
-     */
-    String getMessage();
+	/**
+	 * 描述
+	 */
+	String getMessage();
 
 }

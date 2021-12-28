@@ -21,20 +21,20 @@ import org.springframework.util.Assert;
 @EnableConfigurationProperties(RedissonProperties.class)
 public class RedissonConfig {
 
-    @Autowired
-    private RedissonProperties redissonProperties;
+	@Autowired
+	private RedissonProperties redissonProperties;
 
-    /**
-     * Redisson客户端注册 单机模式
-     */
-    @Bean(destroyMethod = "shutdown")
-    public RedissonClient createRedissonClient() {
-        Assert.notNull(redissonProperties.getAddress(),
-                "redisson.address 不能为空，请在项目中配置属性redisson.address");
-        Config config = new Config();
-        SingleServerConfig singleServerConfig = config.useSingleServer();
-        singleServerConfig.setAddress(redissonProperties.getAddress());
-        return Redisson.create(config);
-    }
+	/**
+	 * Redisson客户端注册 单机模式
+	 */
+	@Bean(destroyMethod = "shutdown")
+	public RedissonClient createRedissonClient() {
+		Assert.notNull(redissonProperties.getAddress(),
+				"redisson.address 不能为空，请在项目中配置属性redisson.address");
+		Config config = new Config();
+		SingleServerConfig singleServerConfig = config.useSingleServer();
+		singleServerConfig.setAddress(redissonProperties.getAddress());
+		return Redisson.create(config);
+	}
 
 }

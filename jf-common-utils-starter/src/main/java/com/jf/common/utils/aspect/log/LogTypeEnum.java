@@ -7,7 +7,7 @@ package com.jf.common.utils.aspect.log;
  * @date 2020/8/1 14:34
  */
 public enum LogTypeEnum {
-    // @formatter:off
+	// @formatter:off
 
     REQUEST_PARAM,
     RESPONSE,
@@ -15,6 +15,6 @@ public enum LogTypeEnum {
 
     // @formatter:on
 
-    LogTypeEnum() {
-    }
+	LogTypeEnum() {
+	}
 }

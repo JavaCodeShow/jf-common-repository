@@ -15,34 +15,34 @@ import lombok.Setter;
 @Getter
 @Setter
 public class BizException extends RuntimeException {
-    private static final long serialVersionUID = -4011604611008441850L;
+	private static final long serialVersionUID = -4011604611008441850L;
 
-    /**
-     * 错误码
-     */
-    protected String errorCode;
+	/**
+	 * 错误码
+	 */
+	protected String errorCode;
 
-    /**
-     * 错误信息
-     */
-    protected String errorMsg;
+	/**
+	 * 错误信息
+	 */
+	protected String errorMsg;
 
-    public BizException(BaseResponseInfoInterface errorResponseInfo) {
-        super(errorResponseInfo.getMessage());
-        this.errorCode = errorResponseInfo.getCode();
-        this.errorMsg = errorResponseInfo.getMessage();
-    }
+	public BizException(BaseResponseInfoInterface errorResponseInfo) {
+		super(errorResponseInfo.getMessage());
+		this.errorCode = errorResponseInfo.getCode();
+		this.errorMsg = errorResponseInfo.getMessage();
+	}
 
-    public BizException(String errorMsg) {
-        super(errorMsg);
-        this.errorMsg = errorMsg;
+	public BizException(String errorMsg) {
+		super(errorMsg);
+		this.errorMsg = errorMsg;
 		this.errorCode = GlobalErrorCodeEnum.SERVER_ERROR.getCode();
-    }
+	}
 
-    public BizException(String errorCode, String errorMsg) {
-        super(errorMsg);
-        this.errorCode = errorCode;
-        this.errorMsg = errorMsg;
-    }
+	public BizException(String errorCode, String errorMsg) {
+		super(errorMsg);
+		this.errorCode = errorCode;
+		this.errorMsg = errorMsg;
+	}
 
 }

@@ -5,15 +5,14 @@ package com.jf.common.redis.service.lock;
  */
 public interface DistributeLockType {
 
-    /**
-     * 服务名称,如：MTC_ORDER
-     */
-    String getPrefix();
+	/**
+	 * 服务名称,如：MTC_ORDER
+	 */
+	String getPrefix();
 
-    /**
-     * 业务类型名称，如：RELEASE_ORDER
-     */
-    String getBizType();
-
+	/**
+	 * 业务类型名称，如：RELEASE_ORDER
+	 */
+	String getBizType();
 
 }
