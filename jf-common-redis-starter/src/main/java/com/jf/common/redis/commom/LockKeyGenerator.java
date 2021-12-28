@@ -15,14 +15,15 @@ public class LockKeyGenerator {
 	/**
 	 * 获取锁的唯一性标识前缀，采用prefix+":"+bizType格式，如：MTC_ORDER:RELEASE_ORDER
 	 */
-	public static String generateLockKey(DistributeLockType bizType,
+	public static String generateLockKey(DistributeLockType lockType,
 			String bizCode) {
 
 		if (StringUtils.isBlank(bizCode)) {
-			return bizType.getPrefix() + ":" + bizType.getBizType();
+			return lockType.getPrefix() + ":" + lockType.getBizType();
 		}
 
-		return bizType.getPrefix() + ":" + bizType.getBizType() + ":" + bizCode;
+		return lockType.getPrefix() + ":" + lockType.getBizType() + ":"
+				+ bizCode;
 
 	}
 }
