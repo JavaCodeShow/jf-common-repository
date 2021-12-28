@@ -1,12 +1,11 @@
 package com.jf.common.utils.result;
 
-import java.io.Serializable;
-import java.util.Objects;
-
-import javax.validation.Valid;
-
 import lombok.Setter;
 import lombok.ToString;
+
+import javax.validation.Valid;
+import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * @author 江峰

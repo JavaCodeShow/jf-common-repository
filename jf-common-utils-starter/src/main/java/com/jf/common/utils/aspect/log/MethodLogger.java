@@ -10,14 +10,14 @@ import java.lang.annotation.*;
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.METHOD })
+@Target({ElementType.METHOD})
 public @interface MethodLogger {
 
-	/**
-	 * 日志打印类型， 默认请求日志全部打印
-	 *
-	 * @return
-	 */
-	LogTypeEnum logType() default LogTypeEnum.FULL;
+    /**
+     * 日志打印类型， 默认请求日志全部打印
+     *
+     * @return
+     */
+    LogTypeEnum logType() default LogTypeEnum.FULL;
 
 }

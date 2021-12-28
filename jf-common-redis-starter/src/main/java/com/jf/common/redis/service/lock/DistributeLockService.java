@@ -14,38 +14,31 @@ public interface DistributeLockService {
 	/**
 	 * 加锁
 	 *
-	 * @param lockKey
-	 *            key
+	 * @param lockKey key
 	 */
 	void lock(String lockKey);
 
 	/**
 	 * 释放锁
 	 *
-	 * @param lockKey
-	 *            key
+	 * @param lockKey key
 	 */
 	void unlock(String lockKey);
 
 	/**
 	 * 加锁锁,设置有效期
 	 *
-	 * @param lockKey
-	 *            key
-	 * @param timeout
-	 *            自动释放锁时间，默认时间单位在实现类传入
+	 * @param lockKey key
+	 * @param timeout 自动释放锁时间，默认时间单位在实现类传入
 	 */
 	void lock(String lockKey, int timeout);
 
 	/**
 	 * 加锁，设置有效期并指定时间单位
 	 *
-	 * @param lockKey
-	 *            key
-	 * @param leaseTime
-	 *            自动释放锁时间
-	 * @param unit
-	 *            时间单位
+	 * @param lockKey   key
+	 * @param leaseTime 自动释放锁时间
+	 * @param unit      时间单位
 	 */
 	void lock(String lockKey, int leaseTime, TimeUnit unit);
 
@@ -61,29 +54,22 @@ public interface DistributeLockService {
 	 * 尝试获取锁，获取到则持有该锁leaseTime时间.
 	 * 若未获取到，在waitTime时间内一直尝试获取，超过waitTime还未获取到则返回false
 	 *
-	 * @param lockKey
-	 *            key
-	 * @param waitTime
-	 *            尝试获取时间
-	 * @param leaseTime
-	 *            自动释放锁时间
-	 * @param unit
-	 *            时间单位
+	 * @param lockKey   key
+	 * @param waitTime  尝试获取时间
+	 * @param leaseTime 自动释放锁时间
+	 * @param unit      时间单位
 	 * @return true-获取锁成功 false-获取锁失败
 	 */
 	boolean tryLock(String lockKey, long waitTime, long leaseTime,
-			TimeUnit unit) throws InterruptedException;
+					TimeUnit unit) throws InterruptedException;
 
 	/**
 	 * 尝试获取锁，获取到则持有该锁leaseTime时间.
 	 * 若未获取到，在waitTime时间内一直尝试获取，超过waitTime还未获取到则返回false
 	 *
-	 * @param lockKey
-	 *            key
-	 * @param leaseTime
-	 *            自动释放锁时间
-	 * @param unit
-	 *            时间单位
+	 * @param lockKey   key
+	 * @param leaseTime 自动释放锁时间
+	 * @param unit      时间单位
 	 * @return true-获取锁成功 false-获取锁失败
 	 */
 	boolean tryLock(String lockKey, long leaseTime, TimeUnit unit)
