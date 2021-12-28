@@ -1,9 +1,10 @@
 package com.jf.common.utils.result;
 
-import com.jf.common.utils.meta.enums.GlobalErrorCodeEnum;
-import lombok.Data;
-
 import java.io.Serializable;
+
+import com.jf.common.utils.meta.enums.GlobalErrorCodeEnum;
+
+import lombok.Data;
 
 /**
  * 描述: 返回统一数据结构
@@ -101,15 +102,15 @@ public class BaseResult<T> implements Serializable {
      * 失败返回,默认 code 和 msg
      */
     public static BaseResult fail() {
-        return fail(GlobalErrorCodeEnum.SERVER_BUSY.getCode(),
-                GlobalErrorCodeEnum.SERVER_BUSY.getMessage());
+		return fail(GlobalErrorCodeEnum.SERVER_ERROR.getCode(),
+				GlobalErrorCodeEnum.SERVER_ERROR.getMessage());
     }
 
     /**
      * 失败返回,自定义 msg
      */
     public static BaseResult fail(String msg) {
-        return fail(GlobalErrorCodeEnum.SERVER_BUSY.getCode(), msg);
+		return fail(GlobalErrorCodeEnum.SERVER_ERROR.getCode(), msg);
     }
 
     /**

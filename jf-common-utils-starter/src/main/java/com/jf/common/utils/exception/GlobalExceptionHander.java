@@ -1,8 +1,7 @@
 package com.jf.common.utils.exception;
 
-import com.jf.common.utils.meta.enums.GlobalErrorCodeEnum;
-import com.jf.common.utils.result.BaseResult;
-import lombok.extern.slf4j.Slf4j;
+import java.util.List;
+
 import org.springframework.util.CollectionUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -12,7 +11,10 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.List;
+import com.jf.common.utils.meta.enums.GlobalErrorCodeEnum;
+import com.jf.common.utils.result.BaseResult;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 处理全局异常
@@ -51,7 +53,7 @@ public class GlobalExceptionHander {
     public BaseResult exceptionHandler(NullPointerException e) {
 
         log.error("发生空指针异常！原因是:", e);
-        return BaseResult.fail(GlobalErrorCodeEnum.SERVER_BUSY);
+		return BaseResult.fail(GlobalErrorCodeEnum.SERVER_ERROR);
 
     }
 
@@ -75,13 +77,13 @@ public class GlobalExceptionHander {
                 log.error("参数校验不通过，请检查请求参数! 原因是: field = [{}], message = [{}]",
                         fieldError.getField(), fieldError.getDefaultMessage());
                 return BaseResult.fail(
-                        GlobalErrorCodeEnum.PARAMS_NOT_MATCH.getCode(),
+						GlobalErrorCodeEnum.PARAMS_ERROR.getCode(),
                         "字段：" + fieldError.getField() + "; 原因："
                                 + fieldError.getDefaultMessage());
             }
         }
         log.error("参数校验不通过，请检查请求参数!");
-        return BaseResult.fail(GlobalErrorCodeEnum.PARAMS_NOT_MATCH);
+		return BaseResult.fail(GlobalErrorCodeEnum.PARAMS_ERROR);
 
     }
 
@@ -96,7 +98,7 @@ public class GlobalExceptionHander {
     public BaseResult exceptionHandler(Exception e) {
 
         log.error("未知异常！原因是:", e);
-        return BaseResult.fail(GlobalErrorCodeEnum.SERVER_BUSY);
+		return BaseResult.fail(GlobalErrorCodeEnum.SERVER_ERROR);
 
     }
 }

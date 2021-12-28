@@ -1,6 +1,7 @@
 package com.jf.common.utils.result;
 
 import com.jf.common.utils.meta.enums.GlobalErrorCodeEnum;
+
 import lombok.Data;
 
 /**
@@ -38,7 +39,7 @@ public class PageQueryResponse<T> extends BaseResult<T> {
 
     public static <T> PageQueryResponse<T> failure() {
         PageQueryResponse<T> result = new PageQueryResponse<>();
-        result.setResultCode(GlobalErrorCodeEnum.SERVER_BUSY);
+		result.setResultCode(GlobalErrorCodeEnum.SERVER_ERROR);
         result.setSuccess(Boolean.FALSE);
         return result;
     }

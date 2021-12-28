@@ -14,11 +14,13 @@ public enum GlobalErrorCodeEnum implements BaseResponseInfoInterface {
 
 
     SUCCESS("200", "成功"),
-    PARAMS_NOT_MATCH("400", "参数校验不通过，请检查请求参数!"),
+	PARAMS_ERROR("400",
+			"参数校验不通过，请检查请求参数!"),
     NOT_FOUND("404", "未找到该资源!"),
-    SERVER_BUSY("500", "系统繁忙，请稍后重试!"),
+	SERVER_ERROR("500",
+			"系统繁忙，请稍后重试!"),
     RESUBMIT("600", "操作频繁，请稍后重试!"),
-    NOT_GET_LOCK("601", "没有获取到锁!"),
+	NOT_GET_LOCK("601", "操作频繁，请稍后重试!"),
     RPC_TIME_OUT("700", "请求超时");
 
 

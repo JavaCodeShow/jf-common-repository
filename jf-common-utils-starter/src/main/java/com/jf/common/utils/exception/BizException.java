@@ -2,6 +2,7 @@ package com.jf.common.utils.exception;
 
 import com.jf.common.utils.meta.enums.BaseResponseInfoInterface;
 import com.jf.common.utils.meta.enums.GlobalErrorCodeEnum;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -35,7 +36,7 @@ public class BizException extends RuntimeException {
     public BizException(String errorMsg) {
         super(errorMsg);
         this.errorMsg = errorMsg;
-        this.errorCode = GlobalErrorCodeEnum.SERVER_BUSY.getCode();
+		this.errorCode = GlobalErrorCodeEnum.SERVER_ERROR.getCode();
     }
 
     public BizException(String errorCode, String errorMsg) {
