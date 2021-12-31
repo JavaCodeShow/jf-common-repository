@@ -6,6 +6,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -41,6 +42,16 @@ public class GlobalCacheServiceImpl implements GlobalCacheService {
     public String get(final String key) {
 
         return stringRedisTemplate.opsForValue().get(key);
+    }
+
+    @Override
+    public List<String> multiGet(List<String> keyList) {
+        return stringRedisTemplate.opsForValue().multiGet(keyList);
+    }
+
+    @Override
+    public String getAndSet(String key, String value) {
+        return stringRedisTemplate.opsForValue().getAndSet(key, value);
     }
 
     @Override
