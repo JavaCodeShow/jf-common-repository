@@ -14,58 +14,58 @@ import java.util.Set;
  * @create 2021-03-20 23:11:05
  * @since
  */
-public interface GlobalCacheService {
+public interface GlobalCacheService<K, V> {
 
     /**
      * string类型
      * 设置值
      */
-    void set(String key, String value);
+    void set(K key, V value);
 
     /**
      * string类型
      * 设置值，含过期时间
      */
-    void set(String key, String value, long expire);
+    void set(K key, V value, long expire);
 
     /**
      * string类型
      * get值
      */
-    Object get(String key);
+    V get(K key);
 
     /**
      * 设置过期时间
      */
-    boolean expire(String key, long expire);
+    boolean expire(K key, long expire);
 
     /**
      * 判断key是否存在
      */
-    boolean exists(String key);
+    boolean exists(K key);
 
     /**
      * 删除key
      */
-    void del(String key);
+    void del(K key);
 
     /**
      * hash类型
      * 设置值
      */
-    void hSet(String key, String field, String value);
+    void hSet(K key, K field, V value);
 
     /**
      * hash类型
      * 获取值
      */
-    Object hGet(String key, String field);
+    Object hGet(K key, K field);
 
     /**
      * hash类型
      * 批量设置值
      */
-    void hMSet(String key, Map value);
+    void hMSet(K key, Map<K, V> value);
 
     /**
      * hash类型
@@ -77,29 +77,29 @@ public interface GlobalCacheService {
      * set类型
      * 设置值
      */
-    void sAdd(String key, String... values);
+    void sAdd(K key, V... values);
 
     /**
      * set类型
      * 获取值
      */
-    Collection sMembers(String key);
+    Collection sMembers(K key);
 
     /**
      * set类型
      * 该key对应的值是否存在
      */
-    boolean sIsMember(String key, String value);
+    boolean sIsMember(K key, V value);
 
     /**
      * 批量删除
      */
-    void del(Set<String> keys);
+    void del(Set<K> keys);
 
     /**
      * redis 自增
      */
-    long incr(String key, long delta);
+    long incr(K key, long delta);
 
     /**
      * 设置过期周期
@@ -108,11 +108,11 @@ public interface GlobalCacheService {
      * @param second 过期时间，单位为秒
      * @return
      */
-    Boolean setExpire(String key, long second);
+    Boolean setExpire(K key, long second);
 
     /**
      * 获取过期时间
      */
-    long getExpire(String key);
+    long getExpire(K key);
 
 }
