@@ -4,7 +4,6 @@ import com.jf.common.redis.service.lock.DistributeLockService;
 import com.jf.common.utils.exception.BizException;
 import com.jf.common.utils.meta.enums.GlobalErrorCodeEnum;
 import com.jf.common.utils.result.BaseResult;
-import com.jf.common.utils.utils.time.LocalDateTimeUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -42,7 +41,7 @@ public class LockMethodInterceptor {
 
         String lockKey = generateLockKey(pjp);
 
-        log.info("redis lock key is [{}]", lockKey);
+        // log.info("redis lock key is [{}]", lockKey);
 
         log.info("线程 = [{}], lockKey = [{}], waitTime = [{}], leaseTime = [{}]",
                 Thread.currentThread().getName(), lockKey,
@@ -57,8 +56,8 @@ public class LockMethodInterceptor {
             throw new BizException(GlobalErrorCodeEnum.RESUBMIT);
         }
 
-        log.info("success = [{}], 时间 = [{}]", true,
-                LocalDateTimeUtil.getLocalDateTimeStr());
+        // log.info("success = [{}], 时间 = [{}]", true,
+        //         LocalDateTimeUtil.getLocalDateTimeStr());
 
         return pjp.proceed();
     }
@@ -100,26 +99,26 @@ public class LockMethodInterceptor {
         }
 
         // 生成分布式锁key
-        log.info("线程[{}]尝试获取锁，锁的key=[{}]", threadName, lockKey);
+        // log.info("线程[{}]尝试获取锁，锁的key=[{}]", threadName, lockKey);
 
-        log.info("线程 = [{}], lockKey = [{}], waitTime = [{}], leaseTime = [{}]",
-                threadName, lockKey, lockAnnotaion.waitTime(),
-                lockAnnotaion.leaseTime());
+        // log.info("线程 = [{}], lockKey = [{}], waitTime = [{}], leaseTime = [{}]",
+        //         threadName, lockKey, lockAnnotaion.waitTime(),
+        //         lockAnnotaion.leaseTime());
 
         if (distributeLockService.tryLock(lockKey, lockAnnotaion.waitTime(),
                 lockAnnotaion.leaseTime(), TimeUnit.SECONDS)) {
 
             try {
-                log.info("线程 = [{}] 获取锁成功", threadName);
+                log.info("线程 = [{}] 获取锁成功, lockKey = [{}]", threadName, lockKey);
 
                 return pjp.proceed();
             } finally {
                 if (distributeLockService.isLocked(lockKey)) {
-                    log.info("锁的key的值 = [{}], 被线程 = [{}]持有", lockKey,
-                            threadName);
+                    // log.info("锁的key的值 = [{}], 被线程 = [{}]持有", lockKey,
+                    //         threadName);
 
                     if (distributeLockService.isHeldByCurrentThread(lockKey)) {
-                        log.info("当前线程 {} 保持锁定", threadName);
+                        // log.info("当前线程 {} 保持锁定", threadName);
                         distributeLockService.unlock(lockKey);
                         log.info("线程{} 释放锁", threadName);
                     }
