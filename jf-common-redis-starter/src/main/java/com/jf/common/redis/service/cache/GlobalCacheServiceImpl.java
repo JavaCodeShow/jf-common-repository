@@ -14,95 +14,100 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author 江峰
  * @create 2021-03-20 23:11:05
- * @since
  */
 @Service
 @Slf4j
-public class GlobalCacheServiceImpl<K, V> implements GlobalCacheService<K, V> {
+public class GlobalCacheServiceImpl implements GlobalCacheService {
 
     @Autowired
-    private RedisTemplate<K, V> redisTemplate;
+    private RedisTemplate<String, String> redisTemplate;
 
     @Override
-    public void set(final K key, final V value) {
+    public void set(final String key, final String value) {
         redisTemplate.opsForValue().set(key, value);
     }
 
     @Override
-    public void set(final K key, final V value, long expire) {
+    public void set(final String key, final String value, Long expire) {
         redisTemplate.opsForValue().set(key, value, expire,
                 TimeUnit.SECONDS);
     }
 
     @Override
-    public V get(K key) {
+    public String get(String key) {
 
         return redisTemplate.opsForValue().get(key);
     }
 
     @Override
-    public boolean expire(final K key, long expire) {
+    public List<String> mGet(List<String> keyList) {
+        return redisTemplate.opsForValue().multiGet(keyList);
+    }
+
+    @Override
+    public Boolean expire(final String key, Long expire) {
         return redisTemplate.expire(key, expire, TimeUnit.SECONDS);
     }
 
     @Override
-    public boolean exists(K key) {
+    public Boolean exists(String key) {
 
         return redisTemplate.hasKey(key);
     }
 
     @Override
-    public void del(K key) {
+    public void del(String key) {
 
         redisTemplate.delete(key);
     }
 
     @Override
-    public void del(Set<K> keys) {
+    public void del(Set<String> keys) {
 
         redisTemplate.delete(keys);
     }
 
     @Override
-    public void hSet(K key, K field, V value) {
+    public void hSet(String key, String field, String value) {
 
         redisTemplate.opsForHash().put(key, field, value);
     }
 
     @Override
-    public void sAdd(K key, V... values) {
+    public void sAdd(String key, String... values) {
 
         redisTemplate.opsForSet().add(key, values);
     }
 
     @Override
-    public Collection sMembers(K key) {
+    public Set<String> sMembers(String key) {
         return redisTemplate.opsForSet().members(key);
     }
 
     @Override
-    public boolean sIsMember(K key, V value) {
+    public Boolean sIsMember(String key, String value) {
 
         return redisTemplate.opsForSet().isMember(key, value);
     }
 
     @Override
-    public Object hGet(K key, K field) {
-        return redisTemplate.opsForHash().get(key, field);
+    public String hGet(String key, String field) {
+        return (String) redisTemplate.opsForHash().get(key, field);
     }
 
     @Override
-    public void hMSet(K key, Map<K, V> value) {
+    public void hMSet(String key, Map<String, String> value) {
         redisTemplate.opsForHash().putAll(key, value);
     }
 
     @Override
-    public Collection hMGet(String key, List fieldList) {
-        return redisTemplate.opsForHash().multiGet((K) key, fieldList);
+    public List<String> hMGet(String key, Collection fieldList) {
+        return redisTemplate.opsForHash().multiGet(key, fieldList);
     }
 
     @Override
-    public long incr(K key, long delta) {
+    public Long incr(String key, Long delta) {
+        assert key != null;
         if (delta < 0) {
             throw new RuntimeException("递增因子必须大于0");
         }
@@ -110,7 +115,7 @@ public class GlobalCacheServiceImpl<K, V> implements GlobalCacheService<K, V> {
     }
 
     @Override
-    public Boolean setExpire(K key, long second) {
+    public Boolean setExpire(String key, Long second) {
         return redisTemplate.expire(key, second, TimeUnit.SECONDS);
     }
 
@@ -121,7 +126,7 @@ public class GlobalCacheServiceImpl<K, V> implements GlobalCacheService<K, V> {
      * @return 时间(秒) 返回0代表为永久有效
      */
     @Override
-    public long getExpire(K key) {
+    public Long getExpire(String key) {
         return redisTemplate.getExpire(key);
     }
 

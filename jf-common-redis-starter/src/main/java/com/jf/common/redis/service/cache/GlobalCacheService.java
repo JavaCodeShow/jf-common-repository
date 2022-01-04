@@ -9,97 +9,104 @@ import java.util.Set;
  * 该类封装了redisTemplate中一些常用的操作命令，
  * 如果使用的时候发现这个类里面没有你想要的命令，
  * 可以直接使用redisTemplate.opsForxxx即可。
+ * key 和 value 都是String类型，
+ * 如果value是对象，为了统一，便于理解，需要转换为JSON字符串
  *
  * @author 江峰
  * @create 2021-03-20 23:11:05
- * @since
  */
-public interface GlobalCacheService<K, V> {
+public interface GlobalCacheService {
 
     /**
      * string类型
      * 设置值
      */
-    void set(K key, V value);
+    void set(String key, String value);
 
     /**
      * string类型
      * 设置值，含过期时间
      */
-    void set(K key, V value, long expire);
+    void set(String key, String value, Long expire);
 
     /**
      * string类型
      * get值
      */
-    V get(K key);
+    String get(String key);
+
+    /**
+     * string类型
+     * 批量get值
+     */
+    List<String> mGet(List<String> keyList);
 
     /**
      * 设置过期时间
      */
-    boolean expire(K key, long expire);
+    Boolean expire(String key, Long expire);
 
     /**
      * 判断key是否存在
      */
-    boolean exists(K key);
+    Boolean exists(String key);
 
     /**
      * 删除key
      */
-    void del(K key);
+    void del(String key);
 
     /**
      * hash类型
      * 设置值
      */
-    void hSet(K key, K field, V value);
+    void hSet(String key, String field, String value);
 
     /**
      * hash类型
      * 获取值
      */
-    Object hGet(K key, K field);
+    String hGet(String key, String field);
 
     /**
      * hash类型
      * 批量设置值
      */
-    void hMSet(K key, Map<K, V> value);
+    void hMSet(String key, Map<String, String> value);
 
     /**
      * hash类型
      * 批量获取值
      */
-    Collection hMGet(String key, List fieldList);
+    List<String> hMGet(String key, Collection fieldList);
 
     /**
      * set类型
      * 设置值
      */
-    void sAdd(K key, V... values);
+    void sAdd(String key, String... values);
 
     /**
      * set类型
      * 获取值
      */
-    Collection sMembers(K key);
+    Set<String> sMembers(String key);
 
     /**
      * set类型
      * 该key对应的值是否存在
      */
-    boolean sIsMember(K key, V value);
+    Boolean sIsMember(String key, String value);
 
     /**
      * 批量删除
      */
-    void del(Set<K> keys);
+    void del(Set<String> keys);
 
     /**
      * redis 自增
      */
-    long incr(K key, long delta);
+    Long incr(String key, Long delta);
 
     /**
      * 设置过期周期
@@ -108,11 +115,11 @@ public interface GlobalCacheService<K, V> {
      * @param second 过期时间，单位为秒
      * @return
      */
-    Boolean setExpire(K key, long second);
+    Boolean setExpire(String key, Long second);
 
     /**
      * 获取过期时间
      */
-    long getExpire(K key);
+    Long getExpire(String key);
 
 }
