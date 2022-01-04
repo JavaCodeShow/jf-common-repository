@@ -3,7 +3,6 @@ package com.jf.common.redis.service.cache;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -24,24 +23,21 @@ public class GlobalCacheServiceImpl implements GlobalCacheService {
     @Autowired
     private RedisTemplate redisTemplate;
 
-    @Autowired
-    private StringRedisTemplate stringRedisTemplate;
-
     @Override
     public void set(final String key, final String value) {
-        stringRedisTemplate.opsForValue().set(key, value);
+        redisTemplate.opsForValue().set(key, value);
     }
 
     @Override
     public void set(final String key, final String value, long expire) {
-        stringRedisTemplate.opsForValue().set(key, value, expire,
+        redisTemplate.opsForValue().set(key, value, expire,
                 TimeUnit.SECONDS);
     }
 
     @Override
     public Object get(String key) {
 
-        return stringRedisTemplate.opsForValue().get(key);
+        return redisTemplate.opsForValue().get(key);
     }
 
     @Override
