@@ -1,41 +1,38 @@
 package com.jf.common.redis.service.cache;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 /**
+ * 该类封装了redisTemplate中一些常用的操作命令，
+ * 如果使用的时候发现这个类里面没有你想要的命令，
+ * 可以直接使用redisTemplate.opsForxxx即可。
+ *
  * @author 江峰
- * @email feng.jiang@marketin.cn
  * @create 2021-03-20 23:11:05
  * @since
  */
 public interface GlobalCacheService {
 
     /**
-     * string 类型 设置
+     * string类型
+     * 设置值
      */
     void set(String key, String value);
 
     /**
-     * string 类型 设置 含过期时间
+     * string类型
+     * 设置值，含过期时间
      */
     void set(String key, String value, long expire);
 
     /**
-     * string 类型 get值
+     * string类型
+     * get值
      */
-    String get(String key);
-
-    /**
-     * string 类型 批量get值
-     */
-    List<String> multiGet(List<String> keyList);
-
-    /**
-     * string 类型 get值 并且设置为另外一个值
-     */
-    String getAndSet(String key, String value);
+    Object get(String key);
 
     /**
      * 设置过期时间
@@ -53,22 +50,45 @@ public interface GlobalCacheService {
     void del(String key);
 
     /**
-     * hash 设置值
+     * hash类型
+     * 设置值
      */
     void hSet(String key, String field, String value);
 
     /**
-     * hash 获取值
+     * hash类型
+     * 获取值
      */
     Object hGet(String key, String field);
 
     /**
-     * 批量 hash 设置值
+     * hash类型
+     * 批量设置值
      */
     void hMSet(String key, Map value);
 
-    void sAdd(String key, String value);
+    /**
+     * hash类型
+     * 批量获取值
+     */
+    Collection hMGet(String key, List fieldList);
 
+    /**
+     * set类型
+     * 设置值
+     */
+    void sAdd(String key, String... values);
+
+    /**
+     * set类型
+     * 获取值
+     */
+    Collection sMembers(String key);
+
+    /**
+     * set类型
+     * 该key对应的值是否存在
+     */
     boolean sIsMember(String key, String value);
 
     /**
@@ -82,7 +102,7 @@ public interface GlobalCacheService {
     long incr(String key, long delta);
 
     /**
-     * 设置生命周期
+     * 设置过期周期
      *
      * @param key    redis key
      * @param second 过期时间，单位为秒

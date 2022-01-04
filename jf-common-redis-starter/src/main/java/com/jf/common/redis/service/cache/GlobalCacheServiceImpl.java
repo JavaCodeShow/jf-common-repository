@@ -6,6 +6,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -13,7 +14,6 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * @author 江峰
- * @email feng.jiang@marketin.cn
  * @create 2021-03-20 23:11:05
  * @since
  */
@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit;
 public class GlobalCacheServiceImpl implements GlobalCacheService {
 
     @Autowired
-    private RedisTemplate<String, String> redisTemplate;
+    private RedisTemplate redisTemplate;
 
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
@@ -39,19 +39,9 @@ public class GlobalCacheServiceImpl implements GlobalCacheService {
     }
 
     @Override
-    public String get(final String key) {
+    public Object get(String key) {
 
         return stringRedisTemplate.opsForValue().get(key);
-    }
-
-    @Override
-    public List<String> multiGet(List<String> keyList) {
-        return stringRedisTemplate.opsForValue().multiGet(keyList);
-    }
-
-    @Override
-    public String getAndSet(String key, String value) {
-        return stringRedisTemplate.opsForValue().getAndSet(key, value);
     }
 
     @Override
@@ -62,48 +52,57 @@ public class GlobalCacheServiceImpl implements GlobalCacheService {
     @Override
     public boolean exists(String key) {
 
-        return stringRedisTemplate.hasKey(key);
+        return redisTemplate.hasKey(key);
     }
 
     @Override
     public void del(String key) {
 
-        stringRedisTemplate.delete(key);
+        redisTemplate.delete(key);
     }
 
     @Override
     public void del(Set<String> keys) {
 
-        stringRedisTemplate.delete(keys);
+        redisTemplate.delete(keys);
     }
 
     @Override
     public void hSet(String key, String field, String value) {
 
-        stringRedisTemplate.opsForHash().put(key, field, value);
+        redisTemplate.opsForHash().put(key, field, value);
     }
 
     @Override
-    public void hMSet(String key, Map value) {
+    public void sAdd(String key, String... values) {
 
-        stringRedisTemplate.opsForHash().putAll(key, value);
+        redisTemplate.opsForSet().add(key, values);
     }
 
     @Override
-    public void sAdd(String key, String value) {
-
-        stringRedisTemplate.opsForSet().add(key, value);
+    public Collection sMembers(String key) {
+        return redisTemplate.opsForSet().members(key);
     }
 
     @Override
     public boolean sIsMember(String key, String value) {
 
-        return stringRedisTemplate.opsForSet().isMember(key, value);
+        return redisTemplate.opsForSet().isMember(key, value);
     }
 
     @Override
     public Object hGet(String key, String field) {
-        return stringRedisTemplate.opsForHash().get(key, field);
+        return redisTemplate.opsForHash().get(key, field);
+    }
+
+    @Override
+    public void hMSet(String key, Map value) {
+        redisTemplate.opsForHash().putAll(key, value);
+    }
+
+    @Override
+    public Collection hMGet(String key, List fieldList) {
+        return redisTemplate.opsForHash().multiGet(key, fieldList);
     }
 
     @Override
@@ -111,12 +110,12 @@ public class GlobalCacheServiceImpl implements GlobalCacheService {
         if (delta < 0) {
             throw new RuntimeException("递增因子必须大于0");
         }
-        return stringRedisTemplate.opsForValue().increment(key, delta);
+        return redisTemplate.opsForValue().increment(key, delta);
     }
 
     @Override
     public Boolean setExpire(String key, long second) {
-        return stringRedisTemplate.expire(key, second, TimeUnit.SECONDS);
+        return redisTemplate.expire(key, second, TimeUnit.SECONDS);
     }
 
     /**
@@ -127,7 +126,7 @@ public class GlobalCacheServiceImpl implements GlobalCacheService {
      */
     @Override
     public long getExpire(String key) {
-        return stringRedisTemplate.getExpire(key);
+        return redisTemplate.getExpire(key);
     }
 
 }

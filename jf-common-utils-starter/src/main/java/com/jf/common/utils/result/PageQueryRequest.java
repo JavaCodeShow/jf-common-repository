@@ -9,7 +9,6 @@ import java.util.Objects;
 
 /**
  * @author 江峰
- * @email feng.jiang@marketin.cn
  * @create 2021-03-20 12:37:00
  * @since
  */
