@@ -1,11 +1,11 @@
 package com.jf.common.utils.filter;
 
+import com.jf.common.utils.utils.id.IdGenerator;
 import org.slf4j.MDC;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import java.io.IOException;
-import java.util.UUID;
 
 /**
  * @author 江峰
@@ -22,8 +22,7 @@ public class LogbackFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        UUID uuid = UUID.randomUUID();
-        MDC.put(TRACE_UUID, uuid.toString().replace("-", ""));
+        MDC.put(TRACE_UUID, IdGenerator.getId());
         try {
             filterChain.doFilter(servletRequest, servletResponse);
         } finally {
