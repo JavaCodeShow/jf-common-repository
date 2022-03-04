@@ -14,6 +14,11 @@ import java.lang.annotation.*;
 public @interface MethodLogger {
 
     /**
+     * 接口唯一标识Id
+     */
+    String apiId();
+
+    /**
      * 日志打印类型， 默认请求日志全部打印
      *
      * @return

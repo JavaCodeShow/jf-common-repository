@@ -9,17 +9,15 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -32,6 +30,9 @@ import java.util.stream.Stream;
 @Aspect
 @Component
 public class LoggerHandler {
+
+    private static final String API_ID = "apiId";
+
     /**
      * 切点 --- 包含HttpLogger注解
      */
@@ -43,12 +44,6 @@ public class LoggerHandler {
     public Object logAround(ProceedingJoinPoint joinPoint) throws Throwable {
 
         long start = System.currentTimeMillis();
-
-        HttpServletRequest request = ((ServletRequestAttributes) Objects
-                .requireNonNull(RequestContextHolder.getRequestAttributes()))
-                .getRequest();
-        String url = request.getRequestURL().toString();
-
         Signature signature = joinPoint.getSignature();
         MethodSignature msg = (MethodSignature) signature;
         Object target = joinPoint.getTarget();
@@ -61,6 +56,26 @@ public class LoggerHandler {
         String methodName = joinPoint.getSignature().getName();
         // 通过方法获取注解
         MethodLogger methodLogger = method.getAnnotation(MethodLogger.class);
+        String apiId = methodLogger.apiId();
+        MDC.put(API_ID, apiId);
+
+        // 打印入参
+        printRequestLog(joinPoint, log, methodName, methodLogger);
+
+        Object result = joinPoint.proceed();
+
+        long elapsedTime = System.currentTimeMillis() - start;
+        if (methodLogger.logType().equals(LogTypeEnum.REQUEST_PARAM)) {
+            // 不打印出参数，针对列表类型的不打印
+            log.info("接口耗时: {}ms", elapsedTime);
+        } else {
+            log.info("返回结果: {}, 接口耗时: {}ms", JSONObject.toJSONString(result), elapsedTime);
+        }
+        MDC.remove(API_ID);
+        return result;
+    }
+
+    private void printRequestLog(ProceedingJoinPoint joinPoint, Logger log, String methodName, MethodLogger methodLogger) {
         // 是否打印入参数
         if (methodLogger.logType().equals(LogTypeEnum.FULL)
                 || methodLogger.logType().equals(LogTypeEnum.REQUEST_PARAM)) {
@@ -72,20 +87,7 @@ public class LoggerHandler {
                     .filter(arg -> (!(arg instanceof HttpServletRequest)
                             && !(arg instanceof HttpServletResponse)))
                     .collect(Collectors.toList());
-            log.info("请求方法: {}, 请求URL：{}, 请求参数: {}", methodName, url,
-                    JSONObject.toJSONString(logArgs));
+            log.info("请求参数: {}", JSONObject.toJSONString(logArgs));
         }
-
-        Object result = joinPoint.proceed();
-        long elapsedTime = System.currentTimeMillis() - start;
-        if (methodLogger.logType().equals(LogTypeEnum.REQUEST_PARAM)) {
-            // 不打印出参数，针对列表类型的不打印
-            log.info("请求方法: {}, 请求URL：{}, 耗时: {}ms", methodName, url,
-                    elapsedTime);
-        } else {
-            log.info("请求方法: {}, 请求URL：{}, 返回结果: {}, 耗时: {}ms", methodName, url,
-                    JSONObject.toJSONString(result), elapsedTime);
-        }
-        return result;
     }
 }
