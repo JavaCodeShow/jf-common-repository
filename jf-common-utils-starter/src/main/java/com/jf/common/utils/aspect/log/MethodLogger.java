@@ -4,6 +4,9 @@ import java.lang.annotation.*;
 
 /**
  * controller层日志打印注解
+ * 用途：
+ * 1. 控制打印出参入参的日志
+ * 2. 服务内部接口请求的日志链路追踪
  *
  * @author 江峰
  * @date 2020/5/18 1:41 下午
