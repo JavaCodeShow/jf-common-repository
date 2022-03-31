@@ -1,6 +1,6 @@
 package com.jf.common.redis.annotation;
 
-import com.jf.common.redis.service.lock.DistributeLockService;
+import com.jf.common.redis.service.lock.DistributeLockManager;
 import com.jf.common.utils.exception.BizException;
 import com.jf.common.utils.meta.enums.GlobalErrorCodeEnum;
 import com.jf.common.utils.result.BaseResult;
@@ -25,7 +25,7 @@ import java.util.concurrent.TimeUnit;
 public class LockMethodInterceptor {
 
     @Autowired
-    private DistributeLockService distributeLockService;
+    private DistributeLockManager DistributeLockManager;
 
     /**
      * 防止表单重复提交
@@ -47,7 +47,7 @@ public class LockMethodInterceptor {
                 Thread.currentThread().getName(), lockKey,
                 lockAnnotaion.waitTime(), lockAnnotaion.leaseTime());
 
-        final boolean success = distributeLockService.tryLock(lockKey,
+        final boolean success = DistributeLockManager.tryLock(lockKey,
                 lockAnnotaion.waitTime(), lockAnnotaion.leaseTime(),
                 TimeUnit.SECONDS);
 
@@ -105,7 +105,7 @@ public class LockMethodInterceptor {
         //         threadName, lockKey, lockAnnotaion.waitTime(),
         //         lockAnnotaion.leaseTime());
 
-        if (distributeLockService.tryLock(lockKey, lockAnnotaion.waitTime(),
+        if (DistributeLockManager.tryLock(lockKey, lockAnnotaion.waitTime(),
                 lockAnnotaion.leaseTime(), TimeUnit.SECONDS)) {
 
             try {
@@ -113,13 +113,13 @@ public class LockMethodInterceptor {
 
                 return pjp.proceed();
             } finally {
-                if (distributeLockService.isLocked(lockKey)) {
+                if (DistributeLockManager.isLocked(lockKey)) {
                     // log.info("锁的key的值 = [{}], 被线程 = [{}]持有", lockKey,
                     //         threadName);
 
-                    if (distributeLockService.isHeldByCurrentThread(lockKey)) {
+                    if (DistributeLockManager.isHeldByCurrentThread(lockKey)) {
                         // log.info("当前线程 {} 保持锁定", threadName);
-                        distributeLockService.unlock(lockKey);
+                        DistributeLockManager.unlock(lockKey);
                         log.info("线程{} 释放锁", threadName);
                     }
                 }
