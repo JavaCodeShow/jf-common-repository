@@ -31,12 +31,6 @@ public class DistributeLockManager {
     }
 
 
-    public void lock(String lockKey, int leaseTime) {
-        RLock lock = redissonClient.getLock(lockKey);
-        lock.lock(leaseTime, TimeUnit.MILLISECONDS);
-    }
-
-
     public void lock(String lockKey, int leaseTime, TimeUnit unit) {
         RLock lock = redissonClient.getLock(lockKey);
         lock.lock(leaseTime, unit);
