@@ -19,7 +19,7 @@ public class IdGenerator {
     }
 
     /**
-     * 获取一个唯一的并且趋势自增的ID
+     * 获取多个唯一的并且趋势自增的ID
      */
     public static List<String> batchGetId(int count) {
         List<String> idList = new ArrayList<>();
