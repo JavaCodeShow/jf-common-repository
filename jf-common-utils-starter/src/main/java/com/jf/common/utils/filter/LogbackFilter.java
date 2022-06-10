@@ -26,7 +26,8 @@ public class LogbackFilter implements Filter {
         try {
             filterChain.doFilter(servletRequest, servletResponse);
         } finally {
-            MDC.remove(TRACE_UUID);//保证一次请求一个唯一标识
+            //保证一次请求一个唯一标识
+            MDC.remove(TRACE_UUID);
         }
     }
 
