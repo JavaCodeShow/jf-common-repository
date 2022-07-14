@@ -45,7 +45,7 @@ public class FileContentReplaceUtils {
             return;
         }
         for (File file : fileList) {
-            if (file.isDirectory() && file.getName().contains("configs")) {
+            if (file.isDirectory() && file.getName().contains("configs") && !file.getName().contains(".git")) {
                 //如果是文件夹递归扫描
                 refreshFileList(file);
                 continue;
