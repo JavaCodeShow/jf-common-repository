@@ -23,6 +23,8 @@ public class FileContentReplaceUtils {
         String filepath = "F:\\opt";
         Map<String, String> map = new HashMap<>();
         //把需要替换的文本直接复制到 "" 内就行，编译器会自动添加转义符之类的，否则手动替换拼接会累死
+        map.put("rr-bp1aikftrvf24663j618.mysql.rds.aliyuncs.com:3306", "rds426h9unrjjen77935362.mysql.rds.aliyuncs.com");
+        map.put("develop_ro", "qa_mtc");
         map.put("MoreFungroup@qadb_ro", "0MEt7p@#kc7zY1wVR9");
         map.put("dev_acs_rw%123", "0MEt7p@#kc7zY1wVR9");
         // map.put("要修改的内容2;", "替换后的内容2");
