@@ -25,7 +25,7 @@ import java.util.concurrent.TimeUnit;
 public class LockMethodInterceptor {
 
     @Autowired
-    private DistributeLockManager DistributeLockManager;
+    private DistributeLockManager distributeLockManager;
 
     /**
      * 防止表单重复提交
@@ -37,27 +37,20 @@ public class LockMethodInterceptor {
         MethodSignature signature = (MethodSignature) pjp.getSignature();
         Method method = signature.getMethod();
 
-        ReSubmitLock lockAnnotaion = method.getAnnotation(ReSubmitLock.class);
+        ReSubmitLock lockAnnotation = method.getAnnotation(ReSubmitLock.class);
 
         String lockKey = generateLockKey(pjp);
 
-        // log.info("redis lock key is [{}]", lockKey);
-
-        log.info("线程 = [{}], lockKey = [{}], waitTime = [{}], leaseTime = [{}]",
-                Thread.currentThread().getName(), lockKey,
-                lockAnnotaion.waitTime(), lockAnnotaion.leaseTime());
-
-        final boolean success = DistributeLockManager.tryLock(lockKey,
-                lockAnnotaion.waitTime(), lockAnnotaion.leaseTime(),
+        final boolean success = distributeLockManager.tryLock(lockKey,
+                lockAnnotation.waitTime(), lockAnnotation.leaseTime(),
                 TimeUnit.SECONDS);
-
+        log.info("线程 = [{}] 获取锁成功, lockKey = [{}], waitTime = [{}], leaseTime = [{}]",
+                Thread.currentThread().getName(), lockKey,
+                lockAnnotation.waitTime(), lockAnnotation.leaseTime());
         if (!success) {
             // 重复提交异常不删除key
             throw new BizException(GlobalErrorCodeEnum.RESUBMIT);
         }
-
-        // log.info("success = [{}], 时间 = [{}]", true,
-        //         LocalDateTimeUtil.getLocalDateTimeStr());
 
         return pjp.proceed();
     }
@@ -83,11 +76,6 @@ public class LockMethodInterceptor {
     public Object distributeLockInterceptor(ProceedingJoinPoint pjp)
             throws Throwable {
 
-        // 当前线程名
-        String threadName = Thread.currentThread().getName();
-
-        log.info("线程 = [{}]------进入分布式锁aop------", threadName);
-
         // 获取该注解的实例对象
         DistributeLock lockAnnotaion = ((MethodSignature) pjp.getSignature())
                 .getMethod().getAnnotation(DistributeLock.class);
@@ -98,34 +86,17 @@ public class LockMethodInterceptor {
             throw new BizException("分布式锁必须指定key的值");
         }
 
-        // 生成分布式锁key
-        // log.info("线程[{}]尝试获取锁，锁的key=[{}]", threadName, lockKey);
-
-        // log.info("线程 = [{}], lockKey = [{}], waitTime = [{}], leaseTime = [{}]",
-        //         threadName, lockKey, lockAnnotaion.waitTime(),
-        //         lockAnnotaion.leaseTime());
-
-        if (DistributeLockManager.tryLock(lockKey, lockAnnotaion.waitTime(),
+        if (distributeLockManager.tryLock(lockKey, lockAnnotaion.waitTime(),
                 lockAnnotaion.leaseTime(), TimeUnit.SECONDS)) {
-
             try {
-                log.info("线程 = [{}] 获取锁成功, lockKey = [{}]", threadName, lockKey);
-
                 return pjp.proceed();
             } finally {
-                if (DistributeLockManager.isLocked(lockKey)) {
-                    // log.info("锁的key的值 = [{}], 被线程 = [{}]持有", lockKey,
-                    //         threadName);
-
-                    if (DistributeLockManager.isHeldByCurrentThread(lockKey)) {
-                        // log.info("当前线程 {} 保持锁定", threadName);
-                        DistributeLockManager.unlock(lockKey);
-                        log.info("线程{} 释放锁", threadName);
+                if (distributeLockManager.isLocked(lockKey)) {
+                    if (distributeLockManager.isHeldByCurrentThread(lockKey)) {
+                        distributeLockManager.unlock(lockKey);
                     }
                 }
             }
-        } else {
-            log.info("线程[{}] 获取锁失败", threadName);
         }
         return BaseResult.fail(GlobalErrorCodeEnum.NOT_GET_LOCK);
     }

@@ -19,7 +19,7 @@ public @interface DistributeLock {
     /**
      * 指定分布式锁的key
      */
-    String lockKey();
+    String lockKey() default "";
 
     /**
      * 等待获取锁的时间 <br>
@@ -29,7 +29,7 @@ public @interface DistributeLock {
 
     /**
      * 持有该锁的时间 <br>
-     * 默认60秒钟客户端没有主动解锁，则主动释放锁
+     * 默认30秒钟客户端没有主动解锁，则主动释放锁
      */
     long leaseTime() default 30;
 
